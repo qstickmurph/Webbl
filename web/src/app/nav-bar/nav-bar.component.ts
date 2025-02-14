@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+
+import { NavBarButtonsComponent } from './nav-bar-buttons/nav-bar-buttons.component';
 
 @Component({
   selector: 'nav-bar',
-  imports: [RouterLink],
+  imports: [
+    NavBarButtonsComponent
+  ],
   templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.css'
+  styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent {
 

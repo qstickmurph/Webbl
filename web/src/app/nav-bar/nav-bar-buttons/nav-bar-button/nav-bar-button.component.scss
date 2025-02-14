@@ -1,0 +1,12 @@
+.nav-bar-button-title{
+  display: block;
+  height: var(--navbar-height);
+  width: fit-content;
+  padding: 0px 6px;
+
+  align-content: center;
+  justify-content: center;
+  background-color: var(--background-header-color);
+  color: var(--foreground-color);
+  text-decoration: none;
+}

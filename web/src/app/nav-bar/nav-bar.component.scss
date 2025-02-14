@@ -1,0 +1,10 @@
+@use "../../styles/variables.scss";
+
+:host {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: var(--navbar-height);
+  background-color: var(--background-header-color);
+  text-align: left;
+}

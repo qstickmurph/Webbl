@@ -10,7 +10,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     RouterOutlet
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.scss'
 })
 export class AppRootComponent {
 
