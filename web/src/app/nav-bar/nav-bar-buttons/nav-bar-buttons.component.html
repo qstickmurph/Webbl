@@ -1,4 +1,6 @@
-<nav-bar-button *ngFor='let button of buttons'
-  [title]='button.title'
-  [link]='button.link'
-></nav-bar-button>
+<a
+  *ngFor="let button of buttons"
+  [routerLink]="button.link"
+  class="nav-bar-button-title"
+  draggable="false"
+>{{button.title}}</a>

@@ -3,4 +3,26 @@
   width: fit-content;
   display: flex;
   flex-direction: row;
+  column-gap: 0px;
+}
+
+.nav-bar-button-title{
+  display: block;
+  height: var(--navbar-height);
+  width: fit-content;
+  padding: 0px 8px;
+
+  align-content: center;
+  background-color: var(--background-header-color);
+
+  font-size: 20px;
+  color: var(--foreground-color);
+  text-decoration: none;
+
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
