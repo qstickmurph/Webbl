@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  height: 100%;
+  width: fit-content;
+
+  border-color: white;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.pitch {
+  display: block;
+
+  width: auto;
+  height: 100%;
+
+  aspect-ratio: 15 / 26;
+
+  background-image: url("/assets/images/blood-bowl-pitch.png");
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}

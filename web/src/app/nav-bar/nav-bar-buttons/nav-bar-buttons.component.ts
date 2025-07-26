@@ -6,7 +6,7 @@ import { defaultNavBarButtonsConstant } from '../../constants/nav-bar-constants'
 import { NavBarButton } from '../../models/nav-bar-button.model';
 
 @Component({
-  selector: 'nav-bar-buttons',
+  selector: 'app-nav-bar-buttons',
   imports: [
     NgFor,
     RouterLink
