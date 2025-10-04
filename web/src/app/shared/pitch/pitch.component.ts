@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { PlayerIconComponent } from '../player-icon/player-icon.component'
 
 @Component({
   selector: 'app-pitch',
-  imports: [],
+  imports: [ PlayerIconComponent ],
   templateUrl: './pitch.component.html',
   styleUrl: './pitch.component.scss'
 })

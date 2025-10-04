@@ -1,6 +1,6 @@
 :host {
   display: block;
-  height: 100%;
+  height: calc(100% - 4px);
   width: fit-content;
 
   border-color: white;
@@ -9,6 +9,7 @@
 }
 
 .pitch {
+  position: relative;
   display: block;
 
   width: auto;
@@ -19,4 +20,177 @@
   background-image: url("/assets/images/blood-bowl-pitch.png");
   background-size: 100% auto;
   background-repeat: no-repeat;
+}
+
+app-player-icon {
+  --square-height: calc(100% / 26);
+  --square-width: calc(100% / 15);
+
+  position: absolute;
+  height: var(--square-height);
+  width: var(--square-width);
+
+  &.x0 {
+    left: calc(0 * var(--square-width));
+  }
+
+  &.x1 {
+    left: calc(1 * var(--square-width));
+  }
+
+  &.x2 {
+    left: calc(2 * var(--square-width));
+  }
+
+  &.x3 {
+    left: calc(3 * var(--square-width));
+  }
+
+  &.x4 {
+    left: calc(4 * var(--square-width));
+  }
+
+  &.x5 {
+    left: calc(5 * var(--square-width));
+  }
+
+  &.x6 {
+    left: calc(6 * var(--square-width));
+  }
+
+  &.x7 {
+    left: calc(7 * var(--square-width));
+  }
+
+  &.x8 {
+    left: calc(8 * var(--square-width));
+  }
+
+  &.x9 {
+    left: calc(9 * var(--square-width));
+  }
+
+  &.x10 {
+    left: calc(10 * var(--square-width));
+  }
+
+  &.x11 {
+    left: calc(11 * var(--square-width));
+  }
+
+  &.x12 {
+    left: calc(12 * var(--square-width));
+  }
+
+  &.x13 {
+    left: calc(13 * var(--square-width));
+  }
+
+  &.x14 {
+    left: calc(14 * var(--square-width));
+  }
+
+  &.y0 {
+    top: calc(0 * var(--square-height));
+  }
+
+  &.y1 {
+    top: calc(1 * var(--square-height));
+  }
+
+  &.y2 {
+    top: calc(2 * var(--square-height));
+  }
+
+  &.y3 {
+    top: calc(3 * var(--square-height));
+  }
+
+  &.y4 {
+    top: calc(4 * var(--square-height));
+  }
+
+  &.y5 {
+    top: calc(5 * var(--square-height));
+  }
+
+  &.y6 {
+    top: calc(6 * var(--square-height));
+  }
+
+  &.y7 {
+    top: calc(7 * var(--square-height));
+  }
+
+  &.y8 {
+    top: calc(8 * var(--square-height));
+  }
+
+  &.y9 {
+    top: calc(9 * var(--square-height));
+  }
+
+  &.y10 {
+    top: calc(10 * var(--square-height));
+  }
+
+  &.y11 {
+    top: calc(11 * var(--square-height));
+  }
+
+  &.y12 {
+    top: calc(12 * var(--square-height));
+  }
+
+  &.y13 {
+    top: calc(13 * var(--square-height));
+  }
+
+  &.y14 {
+    top: calc(14 * var(--square-height));
+  }
+
+  &.y15 {
+    top: calc(15 * var(--square-height));
+  }
+
+  &.y16 {
+    top: calc(16 * var(--square-height));
+  }
+
+  &.y17 {
+    top: calc(17 * var(--square-height));
+  }
+
+  &.y18 {
+    top: calc(18 * var(--square-height));
+  }
+
+  &.y19 {
+    top: calc(19 * var(--square-height));
+  }
+
+  &.y20 {
+    top: calc(20 * var(--square-height));
+  }
+
+  &.y21 {
+    top: calc(21 * var(--square-height));
+  }
+
+  &.y22 {
+    top: calc(22 * var(--square-height));
+  }
+
+  &.y23 {
+    top: calc(23 * var(--square-height));
+  }
+
+  &.y24 {
+    top: calc(24 * var(--square-height));
+  }
+
+  &.y25 {
+    top: calc(25 * var(--square-height));
+  }
 }
