@@ -1,12 +1,8 @@
 <div class="pitch">
-  @for (row of players; track $index; let idy = $index) {
-    @for (player of row; track $index; let idx = $index) {
-      @if (player) {
-        <app-player-icon
-          class="x{{ idx }} y{{ idy }}"
-          [team]="player.team"
-        ></app-player-icon>
-      }
-    }
+  @for (playerPosition of players; track $index) {
+    <app-player-icon
+      class="row{{ playerPosition.row }} col{{ playerPosition.col}}"
+      [team]="playerPosition.data.team"
+    ></app-player-icon>
   }
 </div>
