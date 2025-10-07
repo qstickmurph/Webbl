@@ -25,4 +25,5 @@ export class PitchComponent {
   @Output()
   public clickedOnPlayer = new EventEmitter<Player>();
 
+  public moveType = MoveType;
 }

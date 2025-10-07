@@ -1,14 +1,16 @@
 <div class="pitch">
   @for (availableMove of availableMoves; track $index) {
     <div
-      class="availableMove row{{availableMove.row}} col{{availableMove.col}}"
+      class="availableMove row-{{availableMove.row}} col-{{availableMove.col}}"
+      [class.rush]="availableMove.data === moveType.rush"
+
     ></div>
   }
 
   @for (playerPosition of players; track playerPosition.data.id) {
     <app-player-icon
       id="playerIcon-{{ playerPosition.data.id }}"
-      class="row{{ playerPosition.row }} col{{ playerPosition.col}}"
+      class="row-{{ playerPosition.row }} col-{{ playerPosition.col}}"
       [class.selected]="playerPosition.data.id === selectedPlayer?.id"
       [player]="playerPosition.data"
       (clickedOnPlayer)="clickedOnPlayer.emit($event)"
