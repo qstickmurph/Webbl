@@ -1,4 +1,7 @@
 :host {
+  --square-height: calc(100% / 26);
+  --square-width: calc(100% / 15);
+
   display: block;
   height: calc(100% - 4px);
   width: fit-content;
@@ -23,9 +26,6 @@
 }
 
 app-player-icon {
-  --square-height: calc(100% / 26);
-  --square-width: calc(100% / 15);
-
   position: absolute;
   height: var(--square-height);
   width: var(--square-width);
@@ -33,168 +33,177 @@ app-player-icon {
   &.selected {
     outline: 2px #000 solid;
   }
+}
 
-  &.col0 {
-    left: calc(0 * var(--square-width));
-  }
+.availableMove {
+  display: block;
+  position: absolute;
+  height: var(--square-height);
+  width: var(--square-width);
 
-  &.col1 {
-    left: calc(1 * var(--square-width));
-  }
+  background-color: rgba(255, 255, 255, 0.3);
+}
 
-  &.col2 {
-    left: calc(2 * var(--square-width));
-  }
+.col0 {
+  left: calc(0 * var(--square-width));
+}
 
-  &.col3 {
-    left: calc(3 * var(--square-width));
-  }
+.col1 {
+  left: calc(1 * var(--square-width));
+}
 
-  &.col4 {
-    left: calc(4 * var(--square-width));
-  }
+.col2 {
+  left: calc(2 * var(--square-width));
+}
 
-  &.col5 {
-    left: calc(5 * var(--square-width));
-  }
+.col3 {
+  left: calc(3 * var(--square-width));
+}
 
-  &.col6 {
-    left: calc(6 * var(--square-width));
-  }
+.col4 {
+  left: calc(4 * var(--square-width));
+}
 
-  &.col7 {
-    left: calc(7 * var(--square-width));
-  }
+.col5 {
+  left: calc(5 * var(--square-width));
+}
 
-  &.col8 {
-    left: calc(8 * var(--square-width));
-  }
+.col6 {
+  left: calc(6 * var(--square-width));
+}
 
-  &.col9 {
-    left: calc(9 * var(--square-width));
-  }
+.col7 {
+  left: calc(7 * var(--square-width));
+}
 
-  &.col10 {
-    left: calc(10 * var(--square-width));
-  }
+.col8 {
+  left: calc(8 * var(--square-width));
+}
 
-  &.col11 {
-    left: calc(11 * var(--square-width));
-  }
+.col9 {
+  left: calc(9 * var(--square-width));
+}
 
-  &.col12 {
-    left: calc(12 * var(--square-width));
-  }
+.col10 {
+  left: calc(10 * var(--square-width));
+}
 
-  &.col13 {
-    left: calc(13 * var(--square-width));
-  }
+.col11 {
+  left: calc(11 * var(--square-width));
+}
 
-  &.col14 {
-    left: calc(14 * var(--square-width));
-  }
+.col12 {
+  left: calc(12 * var(--square-width));
+}
 
-  &.row0 {
-    top: calc(0 * var(--square-height));
-  }
+.col13 {
+  left: calc(13 * var(--square-width));
+}
 
-  &.row1 {
-    top: calc(1 * var(--square-height));
-  }
+.col14 {
+  left: calc(14 * var(--square-width));
+}
 
-  &.row2 {
-    top: calc(2 * var(--square-height));
-  }
+.row0 {
+  top: calc(0 * var(--square-height));
+}
 
-  &.row3 {
-    top: calc(3 * var(--square-height));
-  }
+.row1 {
+  top: calc(1 * var(--square-height));
+}
 
-  &.row4 {
-    top: calc(4 * var(--square-height));
-  }
+.row2 {
+  top: calc(2 * var(--square-height));
+}
 
-  &.row5 {
-    top: calc(5 * var(--square-height));
-  }
+.row3 {
+  top: calc(3 * var(--square-height));
+}
 
-  &.row6 {
-    top: calc(6 * var(--square-height));
-  }
+.row4 {
+  top: calc(4 * var(--square-height));
+}
 
-  &.row7 {
-    top: calc(7 * var(--square-height));
-  }
+.row5 {
+  top: calc(5 * var(--square-height));
+}
 
-  &.row8 {
-    top: calc(8 * var(--square-height));
-  }
+.row6 {
+  top: calc(6 * var(--square-height));
+}
 
-  &.row9 {
-    top: calc(9 * var(--square-height));
-  }
+.row7 {
+  top: calc(7 * var(--square-height));
+}
 
-  &.row10 {
-    top: calc(10 * var(--square-height));
-  }
+.row8 {
+  top: calc(8 * var(--square-height));
+}
 
-  &.row11 {
-    top: calc(11 * var(--square-height));
-  }
+.row9 {
+  top: calc(9 * var(--square-height));
+}
 
-  &.row12 {
-    top: calc(12 * var(--square-height));
-  }
+.row10 {
+  top: calc(10 * var(--square-height));
+}
 
-  &.row13 {
-    top: calc(13 * var(--square-height));
-  }
+.row11 {
+  top: calc(11 * var(--square-height));
+}
 
-  &.row14 {
-    top: calc(14 * var(--square-height));
-  }
+.row12 {
+  top: calc(12 * var(--square-height));
+}
 
-  &.row15 {
-    top: calc(15 * var(--square-height));
-  }
+.row13 {
+  top: calc(13 * var(--square-height));
+}
 
-  &.row16 {
-    top: calc(16 * var(--square-height));
-  }
+.row14 {
+  top: calc(14 * var(--square-height));
+}
 
-  &.row17 {
-    top: calc(17 * var(--square-height));
-  }
+.row15 {
+  top: calc(15 * var(--square-height));
+}
 
-  &.row18 {
-    top: calc(18 * var(--square-height));
-  }
+.row16 {
+  top: calc(16 * var(--square-height));
+}
 
-  &.row19 {
-    top: calc(19 * var(--square-height));
-  }
+.row17 {
+  top: calc(17 * var(--square-height));
+}
 
-  &.row20 {
-    top: calc(20 * var(--square-height));
-  }
+.row18 {
+  top: calc(18 * var(--square-height));
+}
 
-  &.row21 {
-    top: calc(21 * var(--square-height));
-  }
+.row19 {
+  top: calc(19 * var(--square-height));
+}
 
-  &.row22 {
-    top: calc(22 * var(--square-height));
-  }
+.row20 {
+  top: calc(20 * var(--square-height));
+}
 
-  &.row23 {
-    top: calc(23 * var(--square-height));
-  }
+.row21 {
+  top: calc(21 * var(--square-height));
+}
 
-  &.row24 {
-    top: calc(24 * var(--square-height));
-  }
+.row22 {
+  top: calc(22 * var(--square-height));
+}
 
-  &.row25 {
-    top: calc(25 * var(--square-height));
-  }
+.row23 {
+  top: calc(23 * var(--square-height));
+}
+
+.row24 {
+  top: calc(24 * var(--square-height));
+}
+
+.row25 {
+  top: calc(25 * var(--square-height));
 }

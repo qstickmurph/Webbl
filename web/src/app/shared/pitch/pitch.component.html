@@ -1,6 +1,8 @@
 <div class="pitch">
   @for (availableMove of availableMoves; track $index) {
-    <div></div>
+    <div
+      class="availableMove row{{availableMove.row}} col{{availableMove.col}}"
+    ></div>
   }
 
   @for (playerPosition of players; track playerPosition.data.id) {

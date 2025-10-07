@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AvailableMovesService } from './services/available-moves.service';
+import { Component, inject } from '@angular/core';
 import { PitchComponent } from '../../shared/pitch/pitch.component';
 import { ScoreboardComponent } from '../../shared/scoreboard/scoreboard.component';
 import { ChatLogComponent } from '../../shared/chat-log/chat-log.component';
@@ -20,6 +21,8 @@ import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
   styleUrl: './game.component.scss'
 })
 export class GameComponent {
+  private availableMovesService = inject(AvailableMovesService);
+
   public players: PitchPosition<Player>[] = []
   public selectedPlayer?: Player;
   public availableMoves: PitchPosition<MoveType>[] = [];
@@ -30,6 +33,13 @@ export class GameComponent {
 
   onClickedOnPlayer(player: Player) {
     this.selectedPlayer = player;
+
+    const selectedPlayerPosition = this.players.find(playerPosition => player.id === playerPosition.data.id);
+    if (!selectedPlayerPosition) {
+      return;
+    }
+
+    this.availableMoves = this.availableMovesService.GetAvailableMoves(selectedPlayerPosition.row, selectedPlayerPosition.col)
   }
 
   onRightClick(event: MouseEvent) {
