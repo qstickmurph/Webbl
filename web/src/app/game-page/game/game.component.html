@@ -1,7 +1,13 @@
 <div class="interface-container left-interface-container">
 </div>
 <div class="pitch-container">
-  <app-pitch></app-pitch>
+  <app-pitch
+    [players]="players"
+    [selectedPlayer]="selectedPlayer"
+    [availableMoves]="availableMoves"
+    (clickedOnPlayer)="onClickedOnPlayer($event)"
+    (contextmenu)="onRightClick($event)"
+  ></app-pitch>
 </div>
 <div class="interface-container right-interface-container">
   <app-scoreboard></app-scoreboard>

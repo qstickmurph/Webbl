@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Team } from '../../enums/team.enum';
+import { Player } from '../../models/player.model';
 
 @Component({
   selector: 'app-player-icon',
@@ -8,11 +9,18 @@ import { Team } from '../../enums/team.enum';
   styleUrl: './player-icon.component.scss'
 })
 export class PlayerIconComponent {
-  @Input()
-  public team: Team = Team.blue;
+  @Input({ required: true })
+  public player!: Player;
+
+  @Output()
+  public clickedOnPlayer = new EventEmitter<Player>;
+
+  onClick() {
+    this.clickedOnPlayer.emit(this.player);
+  }
 
   getPlayerIconSrc() {
-    return this.team === Team.blue
+    return this.player?.team === Team.blue
       ? 'assets/images/blue-lineman.png'
       : 'assets/images/red-lineman.png';
   }

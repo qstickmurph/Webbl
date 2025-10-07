@@ -30,6 +30,10 @@ app-player-icon {
   height: var(--square-height);
   width: var(--square-width);
 
+  &.selected {
+    outline: 2px #000 solid;
+  }
+
   &.col0 {
     left: calc(0 * var(--square-width));
   }

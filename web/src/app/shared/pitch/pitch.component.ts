@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PlayerIconComponent } from '../player-icon/player-icon.component'
 import { Player } from '../../models/player.model';
-import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
 import { PitchPosition } from '../../models/pitch-position.model';
+import { MoveType } from '../../enums/move-type.enum';
 
 @Component({
   selector: 'app-pitch',
@@ -13,9 +13,16 @@ import { PitchPosition } from '../../models/pitch-position.model';
   styleUrl: './pitch.component.scss'
 })
 export class PitchComponent {
+  @Input()
   public players: PitchPosition<Player>[] = [];
 
-  constructor() {
-    this.players = DEFAULT_PITCH_PLAYERS;
-  }
+  @Input()
+  public selectedPlayer?: Player;
+
+  @Input()
+  public availableMoves: PitchPosition<MoveType>[] = [];
+
+  @Output()
+  public clickedOnPlayer = new EventEmitter<Player>();
+
 }
