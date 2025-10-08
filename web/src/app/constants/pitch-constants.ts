@@ -1,6 +1,9 @@
 import { PlayerPosition } from "../models/pitch-position.model";
 import { BluePlayer, RedPlayer } from "../models/player.model";
 
+export const PITCH_ROWS = 26;
+export const PITCH_COLS = 15;
+
 export const DEFAULT_PITCH_PLAYERS: PlayerPosition[] = [
   { row: 5, col: 7, player: new RedPlayer() },
   { row: 8, col: 7, player: new RedPlayer() },
@@ -25,6 +28,3 @@ export const DEFAULT_PITCH_PLAYERS: PlayerPosition[] = [
   { row: 17, col: 7, player: new BluePlayer() },
   { row: 20, col: 7, player: new BluePlayer() },
 ];
-
-export const PITCH_ROWS = 26;
-export const PITCH_COLS = 15;

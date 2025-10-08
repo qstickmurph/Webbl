@@ -23,7 +23,7 @@ export class GameComponent {
   private availableMovesService = inject(AvailableMovesService);
 
   public players: PlayerPosition[] = []
-  public selectedPlayer?: Player;
+  public selectedPlayer?: PlayerPosition;
   public availableMoves: MovementPosition[] = [];
 
   constructor() {
@@ -31,18 +31,32 @@ export class GameComponent {
   }
 
   onClickedOnPlayer(player: Player) {
-    this.selectedPlayer = player;
-
     const selectedPlayerPosition = this.players.find(playerPosition => player.id === playerPosition.player.id);
     if (!selectedPlayerPosition) {
       return;
     }
 
-    this.availableMoves = this.availableMovesService.GetAvailableMoves(selectedPlayerPosition, this.players);
+    this.selectedPlayer = selectedPlayerPosition;
+    this.availableMoves = this.availableMovesService.GetAvailableMoves(this.selectedPlayer, this.players);
+  }
+
+  onDblClickAvailableMove(position: MovementPosition) {
+    if (!this.selectedPlayer) {
+      return;
+    }
+
+    this.selectedPlayer.row = position.row;
+    this.selectedPlayer.col = position.col;
+
+    this.deselectPlayer();
   }
 
   onRightClick(event: MouseEvent) {
     event.preventDefault();
+    this.deselectPlayer();
+  }
+
+  private deselectPlayer() {
     this.selectedPlayer = undefined;
     this.availableMoves = [];
   }

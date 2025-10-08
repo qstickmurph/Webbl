@@ -3,7 +3,7 @@
     <div
       class="availableMove row-{{availableMove.row}} col-{{availableMove.col}}"
       [class.rush]="availableMove.moveType === moveType.rush"
-
+      (dblclick)="dblClickOnAvailableMove.emit(availableMove)"
     ></div>
   }
 
