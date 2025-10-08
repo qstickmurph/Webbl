@@ -4,7 +4,7 @@ import { PitchComponent } from '../../shared/pitch/pitch.component';
 import { ScoreboardComponent } from '../../shared/scoreboard/scoreboard.component';
 import { ChatLogComponent } from '../../shared/chat-log/chat-log.component';
 import { ActionLogComponent } from '../../shared/action-log/action-log.component';
-import { MovementPosition, PlayerPosition } from '../../models/pitch-position.model';
+import { MovementPosition, PitchPosition, PlayerPosition } from '../../models/pitch-position.model';
 import { Player } from '../../models/player.model';
 import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
 import { MovePathService } from './services/move-path.service';
@@ -42,7 +42,7 @@ export class GameComponent {
     this.availableMoves = this.availableMovesService.GetAvailableMoves(this.selectedPlayer, this.players);
   }
 
-  onDblClickAvailableMove(position: MovementPosition) {
+  onDblClickAvailableMove(position: PitchPosition) {
     if (!this.selectedPlayer) {
       return;
     }

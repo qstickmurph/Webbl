@@ -35,18 +35,25 @@ app-player-icon {
   }
 }
 
-.availableMove {
+.pitchSquare {
   display: block;
   position: absolute;
   height: var(--square-height);
   width: var(--square-width);
 
-  background-color: rgba(255, 255, 255, 0.3);
+  &:hover {
+    background-color: rgba(0, 0, 255, 0.3) !important;
+  }
 
-  &.rush {
-    background-color: rgba(150, 150, 150, 0.3);
+  &.availableMove {
+    background-color: rgba(255, 255, 255, 0.3);
+
+    &.rush {
+      background-color: rgba(150, 150, 150, 0.3);
+    }
   }
 }
+
 
 .col-0 {
   left: calc(0 * var(--square-width));

@@ -1,9 +1,10 @@
 <div class="pitch">
-  @for (availableMove of availableMoves; track $index) {
+  @for(pitchSquare of pitchSquares; track $index) {
     <div
-      class="availableMove row-{{availableMove.row}} col-{{availableMove.col}}"
-      [class.rush]="availableMove.moveType === moveType.rush"
-      (dblclick)="onDblClickOnAvailableMove(availableMove)"
+      class="pitchSquare row-{{pitchSquare.row}} col-{{pitchSquare.col}}"
+      [class.availableMove]="pitchSquare.availableMove"
+      [class.rush]="pitchSquare.rush"
+      (dblclick)="onDblClickOnAvailableMove(pitchSquare)"
     ></div>
   }
 
