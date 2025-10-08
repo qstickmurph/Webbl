@@ -28,7 +28,7 @@ export class AvailableMovesService {
       }
     ];
     const reachablePlayers: MovementPosition[] = [];
-    const moveSpeed = 4;
+    const moveSpeed = 6;
     const maxRush = 2;
 
     for (let moveNum: number = 0; moveNum < moveSpeed + maxRush; moveNum++) {
