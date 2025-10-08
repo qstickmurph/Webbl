@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PlayerIconComponent } from '../player-icon/player-icon.component'
 import { Player } from '../../models/player.model';
-import { PitchPosition } from '../../models/pitch-position.model';
+import { MovementPosition, PlayerPosition } from '../../models/pitch-position.model';
 import { MoveType } from '../../enums/move-type.enum';
 
 @Component({
@@ -14,13 +14,13 @@ import { MoveType } from '../../enums/move-type.enum';
 })
 export class PitchComponent {
   @Input()
-  public players: PitchPosition<Player>[] = [];
+  public players: PlayerPosition[] = [];
 
   @Input()
   public selectedPlayer?: Player;
 
   @Input()
-  public availableMoves: PitchPosition<MoveType>[] = [];
+  public availableMoves: MovementPosition[] = [];
 
   @Output()
   public clickedOnPlayer = new EventEmitter<Player>();

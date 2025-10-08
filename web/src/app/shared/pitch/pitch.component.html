@@ -2,17 +2,17 @@
   @for (availableMove of availableMoves; track $index) {
     <div
       class="availableMove row-{{availableMove.row}} col-{{availableMove.col}}"
-      [class.rush]="availableMove.data === moveType.rush"
+      [class.rush]="availableMove.moveType === moveType.rush"
 
     ></div>
   }
 
-  @for (playerPosition of players; track playerPosition.data.id) {
+  @for (playerPosition of players; track playerPosition.player.id) {
     <app-player-icon
-      id="playerIcon-{{ playerPosition.data.id }}"
+      id="playerIcon-{{ playerPosition.player.id }}"
       class="row-{{ playerPosition.row }} col-{{ playerPosition.col}}"
-      [class.selected]="playerPosition.data.id === selectedPlayer?.id"
-      [player]="playerPosition.data"
+      [class.selected]="playerPosition.player.id === selectedPlayer?.id"
+      [player]="playerPosition.player"
       (clickedOnPlayer)="clickedOnPlayer.emit($event)"
     ></app-player-icon>
   }

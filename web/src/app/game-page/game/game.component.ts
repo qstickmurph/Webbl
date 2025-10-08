@@ -4,8 +4,7 @@ import { PitchComponent } from '../../shared/pitch/pitch.component';
 import { ScoreboardComponent } from '../../shared/scoreboard/scoreboard.component';
 import { ChatLogComponent } from '../../shared/chat-log/chat-log.component';
 import { ActionLogComponent } from '../../shared/action-log/action-log.component';
-import { MoveType } from '../../enums/move-type.enum';
-import { PitchPosition } from '../../models/pitch-position.model';
+import { MovementPosition, PlayerPosition } from '../../models/pitch-position.model';
 import { Player } from '../../models/player.model';
 import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
 
@@ -23,9 +22,9 @@ import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
 export class GameComponent {
   private availableMovesService = inject(AvailableMovesService);
 
-  public players: PitchPosition<Player>[] = []
+  public players: PlayerPosition[] = []
   public selectedPlayer?: Player;
-  public availableMoves: PitchPosition<MoveType>[] = [];
+  public availableMoves: MovementPosition[] = [];
 
   constructor() {
     this.players = DEFAULT_PITCH_PLAYERS;
@@ -34,16 +33,17 @@ export class GameComponent {
   onClickedOnPlayer(player: Player) {
     this.selectedPlayer = player;
 
-    const selectedPlayerPosition = this.players.find(playerPosition => player.id === playerPosition.data.id);
+    const selectedPlayerPosition = this.players.find(playerPosition => player.id === playerPosition.player.id);
     if (!selectedPlayerPosition) {
       return;
     }
 
-    this.availableMoves = this.availableMovesService.GetAvailableMoves(selectedPlayerPosition.row, selectedPlayerPosition.col)
+    this.availableMoves = this.availableMovesService.GetAvailableMoves(selectedPlayerPosition, this.players);
   }
 
   onRightClick(event: MouseEvent) {
     event.preventDefault();
     this.selectedPlayer = undefined;
+    this.availableMoves = [];
   }
 }
