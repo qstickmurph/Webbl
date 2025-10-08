@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { MoveType } from "../../../enums/move-type.enum";
 import { MovementPosition, PitchPosition } from "../../../models/pitch-position.model";
-import { Player } from "../../../models/player.model";
 import { PITCH_COLS, PITCH_ROWS } from "../../../constants/pitch-constants";
 
 @Injectable({
@@ -19,7 +18,7 @@ export class AvailableMovesService {
     { row_delta: 1, col_delta: 1 },
   ];
 
-  GetAvailableMoves(selectedPlayerPosition: PitchPosition, playerPositions: PitchPosition[]) {
+  GetAvailableMoves(selectedPlayerPosition: PitchPosition, playerPositions: PitchPosition[], moveSpeed: number = 6, maxRush: number = 2) {
     const availableMoves: MovementPosition[] = [
       {
         row: selectedPlayerPosition.row,
@@ -28,8 +27,6 @@ export class AvailableMovesService {
       }
     ];
     const reachablePlayers: MovementPosition[] = [];
-    const moveSpeed = 6;
-    const maxRush = 2;
 
     for (let moveNum: number = 0; moveNum < moveSpeed + maxRush; moveNum++) {
       const moveType = moveNum < moveSpeed ? MoveType.normal : MoveType.rush;

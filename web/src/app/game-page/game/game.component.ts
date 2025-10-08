@@ -7,6 +7,7 @@ import { ActionLogComponent } from '../../shared/action-log/action-log.component
 import { MovementPosition, PlayerPosition } from '../../models/pitch-position.model';
 import { Player } from '../../models/player.model';
 import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
+import { MovePathService } from './services/move-path.service';
 
 @Component({
   selector: 'app-game',
@@ -21,6 +22,7 @@ import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
 })
 export class GameComponent {
   private availableMovesService = inject(AvailableMovesService);
+  private movePathService = inject(MovePathService);
 
   public players: PlayerPosition[] = []
   public selectedPlayer?: PlayerPosition;

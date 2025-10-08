@@ -3,7 +3,7 @@
     <div
       class="availableMove row-{{availableMove.row}} col-{{availableMove.col}}"
       [class.rush]="availableMove.moveType === moveType.rush"
-      (dblclick)="dblClickOnAvailableMove.emit(availableMove)"
+      (dblclick)="onDblClickOnAvailableMove(availableMove)"
     ></div>
   }
 
@@ -13,7 +13,7 @@
       class="row-{{ playerPosition.row }} col-{{ playerPosition.col}}"
       [class.selected]="playerPosition.player.id === selectedPlayer?.id"
       [player]="playerPosition.player"
-      (clickedOnPlayer)="clickedOnPlayer.emit($event)"
+      (clickedOnPlayer)="onClickedOnPlayer($event)"
     ></app-player-icon>
   }
 </div>
