@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { MoveType } from "../../../enums/move-type.enum";
-import { MovementPosition, PitchPosition } from "../../../models/pitch-position.model";
+import { PitchPosition } from "../../../models/pitch-position.model";
 import { PITCH_COLS, PITCH_ROWS } from "../../../constants/pitch-constants";
+import { MovementPosition } from "../../../models/movement-position.model";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,10 @@ export class AvailableMovesService {
   GetAvailableMoves(selectedPlayerPosition: PitchPosition, playerPositions: PitchPosition[], moveSpeed: number = 6, maxRush: number = 2) {
     const availableMoves: MovementPosition[] = [
       {
-        row: selectedPlayerPosition.row,
-        col: selectedPlayerPosition.col,
+        position: {
+          row: selectedPlayerPosition.row,
+          col: selectedPlayerPosition.col
+        },
         moveType: MoveType.normal
       }
     ];
@@ -33,10 +36,10 @@ export class AvailableMovesService {
       const nextMoves = this.GetAllNextMoves(availableMoves, moveType);
 
       const nextAvailableMoves = nextMoves.filter(
-        move => !this.IsOnPlayer(move, playerPositions) && !this.IsAlreadyAdded(move, availableMoves)
+        move => !this.IsOnPlayer(move.position, playerPositions) && !this.IsAlreadyAdded(move.position, availableMoves.map(x => x.position))
       );
       const nextReachablePlayers = nextMoves.filter(
-        move => this.IsOnPlayer(move, playerPositions) && !this.IsAlreadyAdded(move, reachablePlayers)
+        move => this.IsOnPlayer(move.position, playerPositions) && !this.IsAlreadyAdded(move.position, reachablePlayers.map(x => x.position))
       );
 
       availableMoves.push(...nextAvailableMoves);
@@ -49,13 +52,13 @@ export class AvailableMovesService {
     ];
   }
 
-  private GetAllNextMoves(priorMoves: PitchPosition[], moveType: MoveType) {
+  private GetAllNextMoves(priorMoves: MovementPosition[], moveType: MoveType) {
     const nextAvailableMoves: MovementPosition[] = [];
 
     for (let priorMove of priorMoves) {
-      const nextMoves = this.GetAdjacentPositions(priorMove, moveType);
+      const nextMoves = this.GetAdjacentPositions(priorMove.position, moveType);
       const uniqueNextMoves = nextMoves.filter(
-        move => !this.IsAlreadyAdded(move, nextAvailableMoves)
+        move => !this.IsAlreadyAdded(move.position, nextAvailableMoves.map(x => x.position))
       );
       nextAvailableMoves.push(...uniqueNextMoves);
     }
@@ -67,12 +70,14 @@ export class AvailableMovesService {
     const adjacentPositions: MovementPosition[] = [];
     for (let moveDirection of this.MOVE_DIRECTIONS) {
       const adjacentPosition: MovementPosition = {
-        row: position.row + moveDirection.row_delta,
-        col: position.col + moveDirection.col_delta,
+        position: {
+          row: position.row + moveDirection.row_delta,
+          col: position.col + moveDirection.col_delta
+        },
         moveType: moveType
       };
 
-      if (this.IsInBounds(adjacentPosition.row, adjacentPosition.col)) {
+      if (this.IsInBounds(adjacentPosition.position.row, adjacentPosition.position.col)) {
         adjacentPositions.push(adjacentPosition);
       }
     }

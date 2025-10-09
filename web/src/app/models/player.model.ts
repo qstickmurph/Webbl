@@ -1,27 +1,24 @@
 import { Team } from "../enums/team.enum";
 import { v4 as uuid } from 'uuid';
 
-export interface Player {
-  id: string,
-  team: Team
-}
-
-export class BluePlayer implements Player {
+export class Player {
   public id: string;
   public team: Team;
 
-  constructor() {
-    this.id = uuid();
-    this.team = Team.blue;
+  constructor(team: Team, id?: string){
+    this.id = id ? id : uuid();
+    this.team = team;
   }
 }
 
-export class RedPlayer implements Player {
-  public id: string;
-  public team: Team;
-
+export class BluePlayer extends Player {
   constructor() {
-    this.id = uuid();
-    this.team = Team.red;
+    super(Team.blue);
+  }
+}
+
+export class RedPlayer extends Player {
+  constructor() {
+    super(Team.red);
   }
 }

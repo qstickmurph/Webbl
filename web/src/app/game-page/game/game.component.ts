@@ -4,10 +4,12 @@ import { PitchComponent } from '../../shared/pitch/pitch.component';
 import { ScoreboardComponent } from '../../shared/scoreboard/scoreboard.component';
 import { ChatLogComponent } from '../../shared/chat-log/chat-log.component';
 import { ActionLogComponent } from '../../shared/action-log/action-log.component';
-import { MovementPosition, PitchPosition, PlayerPosition } from '../../models/pitch-position.model';
+import { PitchPosition } from '../../models/pitch-position.model';
 import { Player } from '../../models/player.model';
 import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
 import { MovePathService } from './services/move-path.service';
+import { PlayerPosition } from '../../models/player-position.model';
+import { MovementPosition } from '../../models/movement-position.model';
 
 @Component({
   selector: 'app-game',
@@ -40,7 +42,7 @@ export class GameComponent {
     }
 
     this.selectedPlayer = selectedPlayerPosition;
-    this.availableMoves = this.availableMovesService.GetAvailableMoves(this.selectedPlayer, this.players);
+    this.availableMoves = this.availableMovesService.GetAvailableMoves(this.selectedPlayer.position, this.players.map(x => x.position));
     this.displayedMoves = [];
   }
 
@@ -49,7 +51,7 @@ export class GameComponent {
       return;
     }
 
-    this.displayedMoves = this.movePathService.GetBestPath(this.selectedPlayer, position, this.players);
+    this.displayedMoves = this.movePathService.GetBestPath(this.selectedPlayer.position, position, this.players.map(x => x.position));
   }
 
   onDblClickAvailableMove(position: PitchPosition) {
@@ -57,8 +59,10 @@ export class GameComponent {
       return;
     }
 
-    this.selectedPlayer.row = position.row;
-    this.selectedPlayer.col = position.col;
+    this.selectedPlayer.position = {
+      row: position.row,
+      col: position.col
+    };
 
     this.deselectPlayer();
   }

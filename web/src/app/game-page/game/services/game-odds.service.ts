@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PitchPosition, PlayerPosition } from '../../../models/pitch-position.model';
+import { PitchPosition } from '../../../models/pitch-position.model';
+import { PlayerPosition } from '../../../models/player-position.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,4 @@
-export interface NavBarButton {
+export type NavBarButton = {
   title: string;
   link: string;
 }
