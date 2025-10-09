@@ -1,14 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import { defaultNavBarButtonsConstant } from '../../constants/nav-bar-constants';
 import { NavBarButton } from '../../models/nav-bar-button.model';
+import { DEFAULT_NAV_BAR_BUTTONS } from '../../constants/nav-bar.constants';
 
 @Component({
   selector: 'app-nav-bar-buttons',
   imports: [
-    NgFor,
     RouterLink
   ],
   templateUrl: './nav-bar-buttons.component.html',
@@ -16,5 +14,5 @@ import { NavBarButton } from '../../models/nav-bar-button.model';
 })
 export class NavBarButtonsComponent {
   @Input()
-    buttons: NavBarButton[] = defaultNavBarButtonsConstant;
+    buttons: NavBarButton[] = DEFAULT_NAV_BAR_BUTTONS;
 }

@@ -1,6 +1,6 @@
 import { NavBarButton } from "../models/nav-bar-button.model";
 
-export const defaultNavBarButtonsConstant: NavBarButton[] = [
+export const DEFAULT_NAV_BAR_BUTTONS: NavBarButton[] = [
   {
     title: 'Home',
     link: 'home'

@@ -3,9 +3,9 @@ import { PlayerIconComponent } from '../player-icon/player-icon.component'
 import { Player } from '../../models/player.model';
 import { PitchPosition } from '../../models/pitch-position.model';
 import { MoveType } from '../../enums/move-type.enum';
-import { PITCH_COLS, PITCH_ROWS } from '../../constants/pitch-constants';
 import { MovementPosition } from '../../models/movement-position.model';
 import { PlayerPosition } from '../../models/player-position.model';
+import { PITCH_COLS, PITCH_ROWS } from '../../constants/pitch-dimensions.constants';
 
 type PitchSquare = {
   position: PitchPosition;
@@ -29,7 +29,7 @@ export class PitchComponent implements OnInit, OnChanges {
   @Input() public availableMoves: MovementPosition[] = [];
   @Input() public displayedMoves: PitchPosition[] = [];
 
-  @Output() public clickOnPlayer = new EventEmitter<Player>();
+  @Output() public clickOnPlayer = new EventEmitter<PlayerPosition>();
   @Output() public clickOnAvailableMove = new EventEmitter<PitchPosition>();
   @Output() public dblClickOnAvailableMove = new EventEmitter<PitchPosition>();
 
@@ -37,13 +37,13 @@ export class PitchComponent implements OnInit, OnChanges {
   public pitchSquares: PitchSquare[] = [];
 
   onClickOnPitchSquare(pitchSquare: PitchSquare) {
-    const playerClickedOn = this.FindPitchPlayer(pitchSquare.position)?.player;
-    const availableMoveClickedOn = this.FindAvailableMovePosition(pitchSquare.position);
+    const playerPositionClickedOn = pitchSquare.position.FindIn(this.players);
+    const availableMoveClickedOn = pitchSquare.position.FindIn(this.availableMoves);
 
-    if (playerClickedOn) {
-      this.clickOnPlayer.emit(playerClickedOn);
+    if (playerPositionClickedOn) {
+      this.clickOnPlayer.emit(playerPositionClickedOn);
     } else if (availableMoveClickedOn) {
-      this.clickOnAvailableMove.emit(availableMoveClickedOn.position);
+      this.clickOnAvailableMove.emit(availableMoveClickedOn);
     }
   }
 
@@ -80,8 +80,8 @@ export class PitchComponent implements OnInit, OnChanges {
 
     availableMoves.forEach(move => {
       const square = this.pitchSquares.find(square =>
-        square.position.row === move.position.row
-        && square.position.col === move.position.col
+        square.position.row === move.row
+        && square.position.col === move.col
       );
 
       if (square) {
@@ -124,10 +124,10 @@ export class PitchComponent implements OnInit, OnChanges {
     for (let row: number = 0; row < PITCH_ROWS; row++) {
       for (let col: number = 0; col < PITCH_COLS; col++) {
         const newPitchSquare: PitchSquare = {
-          position: {
-            row: row,
-            col: col,
-          },
+          position: new PitchPosition(
+            row,
+            col
+          ),
           availableMove: false,
           rush: false,
           highlighted: false,
@@ -137,23 +137,5 @@ export class PitchComponent implements OnInit, OnChanges {
         this.pitchSquares.push(newPitchSquare);
       }
     }
-  }
-
-  private FindPitchPlayer(position: PitchPosition) {
-    const clickedOnPlayerPosition = this.players.find(player =>
-      player.position.row === position.row
-      && player.position.col === position.col
-    );
-
-    return clickedOnPlayerPosition;
-  }
-
-  private FindAvailableMovePosition(position: PitchPosition) {
-    const clickedOnPlayerPosition = this.availableMoves.find(pitchPosition =>
-      pitchPosition.position.row === position.row
-      && pitchPosition.position.col === position.col
-    );
-
-    return clickedOnPlayerPosition;
   }
 }

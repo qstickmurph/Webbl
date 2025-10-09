@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { PitchPosition } from '../../../models/pitch-position.model';
-import { PITCH_COLS, PITCH_ROWS } from '../../../constants/pitch-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,7 @@ export class MovePathService {
       {
         position: start,
         distance: 0,
-        distanceH: this.GetDistance(start, end),
+        distanceH: this.GetDistanceHeuristic(start, end),
         priorPositionDistance: undefined
       }
     ];
@@ -30,24 +29,24 @@ export class MovePathService {
     while(openSet.length > 0) {
       const currentPositionDistance = openSet.shift()!;
 
-      if (this.IsEqual(currentPositionDistance.position, end)) {
+      if (currentPositionDistance.position.IsEqual(end)) {
         return this.ReconstructPath(currentPositionDistance);
       }
 
       for (const moveDirection of this.MOVE_DIRECTIONS) {
         const newDistance = currentPositionDistance.distance + 1;
-        const newPosition: PitchPosition = {
-            row: currentPositionDistance.position.row + moveDirection.row_delta,
-            col: currentPositionDistance.position.col + moveDirection.col_delta
-          }
+        const newPosition = new PitchPosition(
+            currentPositionDistance.position.row + moveDirection.row_delta,
+            currentPositionDistance.position.col + moveDirection.col_delta
+        );
         const tentativePositionDistance: PitchPositionDistance = {
           position: newPosition,
           distance: newDistance,
-          distanceH: newDistance + this.GetDistance(newPosition, end),
+          distanceH: newDistance + this.GetDistanceHeuristic(newPosition, end),
           priorPositionDistance: currentPositionDistance
         };
 
-        if (this.IsOutOfBounds(tentativePositionDistance.position)) {
+        if (!tentativePositionDistance.position.IsInBounds()) {
           continue;
         }
 
@@ -75,13 +74,6 @@ export class MovePathService {
     return [];
   }
 
-  private IsOutOfBounds(position: PitchPosition) {
-    return position.row < 0
-      || position.row >= PITCH_ROWS
-      || position.col < 0
-      || position.col >= PITCH_COLS
-  }
-
   private IsOnPlayer(position: PitchPosition, players: PitchPosition[]) {
     return players.some(player =>
       player.row === position.row
@@ -89,11 +81,7 @@ export class MovePathService {
     );
   }
 
-  private IsEqual(a: PitchPosition, b: PitchPosition) {
-    return a.row === b.row && a.col === b.col;
-  }
-
-  private GetDistance(start: PitchPosition, end: PitchPosition) {
+  private GetDistanceHeuristic(start: PitchPosition, end: PitchPosition) {
     return Math.sqrt(
       Math.pow(start.row - end.row, 2)
       + Math.pow(start.col - end.col, 2)

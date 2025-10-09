@@ -16,7 +16,7 @@
   @for (playerPosition of players; track playerPosition.player.id) {
     <app-player-icon
       id="playerIcon-{{ playerPosition.player.id }}"
-      class="row-{{ playerPosition.position.row }} col-{{ playerPosition.position.col}}"
+      class="row-{{ playerPosition.row }} col-{{ playerPosition.col}}"
       [class.selected]="playerPosition.player.id === selectedPlayer?.id"
       [player]="playerPosition.player"
     ></app-player-icon>
