@@ -4,10 +4,12 @@ import { v4 as uuid } from 'uuid';
 export class Player {
   public id: string;
   public team: Team;
+  public ma: number;
 
   constructor(team: Team, id?: string){
     this.id = id ? id : uuid();
     this.team = team;
+    this.ma = 6;
   }
 }
 

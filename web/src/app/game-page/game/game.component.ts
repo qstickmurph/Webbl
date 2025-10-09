@@ -26,7 +26,7 @@ export class GameComponent {
   private movePathService = inject(MovePathService);
 
   public players: PlayerPosition[] = []
-  public selectedPlayer?: PlayerPosition;
+  public selectedPlayerPosition?: PlayerPosition;
   public availableMoves: MovementPosition[] = [];
   public displayedMoves: PitchPosition[] = [];
 
@@ -35,25 +35,32 @@ export class GameComponent {
   }
 
   onClickedOnPlayer(playerPosition: PlayerPosition) {
-    this.selectedPlayer = playerPosition;
-    this.availableMoves = this.availableMovesService.GetAvailableMoves(this.selectedPlayer, this.players);
+    this.selectedPlayerPosition = playerPosition;
+    this.availableMoves = this.availableMovesService.GetAvailableMoves(this.selectedPlayerPosition, this.players,  this.selectedPlayerPosition.player.ma);
     this.displayedMoves = [];
   }
 
   onClickAvailableMove(position: PitchPosition) {
-    if (!this.selectedPlayer) {
+    if (!this.selectedPlayerPosition) {
       return;
     }
 
-    this.displayedMoves = this.movePathService.GetBestPath(this.selectedPlayer, position, this.players);
+    const startPosition = this.displayedMoves.length > 0 ? this.displayedMoves.at(-1)! : this.selectedPlayerPosition;
+    const newPathMoves = this.movePathService.GetBestPath(startPosition, position, this.players);
+    this.displayedMoves = [
+      ...this.displayedMoves,
+      ...newPathMoves.slice(1)
+    ];
+    const remainingMovement = this.selectedPlayerPosition.player.ma - this.displayedMoves.length;
+    this.availableMoves = this.availableMovesService.GetAvailableMoves(this.displayedMoves.at(-1)!, this.players, remainingMovement);
   }
 
   onDblClickAvailableMove(position: PitchPosition) {
-    if (!this.selectedPlayer) {
+    if (!this.selectedPlayerPosition) {
       return;
     }
 
-    this.selectedPlayer.MoveTo(position);
+    this.selectedPlayerPosition.MoveTo(position);
     this.deselectPlayer();
   }
 
@@ -63,7 +70,7 @@ export class GameComponent {
   }
 
   private deselectPlayer() {
-    this.selectedPlayer = undefined;
+    this.selectedPlayerPosition = undefined;
     this.availableMoves = [];
     this.displayedMoves = [];
   }
