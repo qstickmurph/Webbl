@@ -10,6 +10,7 @@ interface PitchSquare extends PitchPosition {
   col: number,
   availableMove: boolean,
   rush: boolean,
+  displayedMove: boolean,
   highlighted: boolean
 }
 
@@ -27,17 +28,21 @@ export class PitchComponent implements OnInit, OnChanges {
   @Input() public availableMoves: MovementPosition[] = [];
   @Input() public displayedMoves: PitchPosition[] = [];
 
-  @Output() public clickedOnPlayer = new EventEmitter<Player>();
+  @Output() public clickOnPlayer = new EventEmitter<Player>();
+  @Output() public clickOnAvailableMove = new EventEmitter<PitchPosition>();
   @Output() public dblClickOnAvailableMove = new EventEmitter<PitchPosition>();
 
   public moveType = MoveType;
   public pitchSquares: PitchSquare[] = [];
 
   onClickOnPitchSquare(pitchSquare: PitchSquare) {
-    const playerClickedOn = this.FindPlayerOnSquare(pitchSquare);
+    const playerClickedOn = this.FindPitchPlayer(pitchSquare)?.player;
+    const availableMoveClickedOn = this.FindAvailableMovePosition(pitchSquare);
 
     if (playerClickedOn) {
-      this.clickedOnPlayer.emit(playerClickedOn);
+      this.clickOnPlayer.emit(playerClickedOn);
+    } else if (availableMoveClickedOn) {
+      this.clickOnAvailableMove.emit(availableMoveClickedOn);
     }
   }
 
@@ -62,6 +67,10 @@ export class PitchComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
       if(changes['availableMoves']) {
         this.setupPitchSquareAvailableMoves(changes['availableMoves'].currentValue);
+      }
+
+      if(changes['displayedMoves']) {
+        this.setupPitchSquareDisplayedMoves(changes['displayedMoves'].currentValue);
       }
   }
 
@@ -88,6 +97,27 @@ export class PitchComponent implements OnInit, OnChanges {
     });
   }
 
+  private setupPitchSquareDisplayedMoves(displayedMoves: PitchPosition[]) {
+    this.resetDisplayedMoves();
+
+    displayedMoves.forEach(move => {
+      const square = this.pitchSquares.find(square =>
+        square.row === move.row
+        && square.col === move.col
+      );
+
+      if (square) {
+        square.displayedMove = true;
+      }
+    });
+  }
+
+  private resetDisplayedMoves() {
+    this.pitchSquares.forEach(square => {
+        square.displayedMove = false
+    });
+  }
+
   private setupPitchSquares() {
     this.pitchSquares = [];
     for (let row: number = 0; row < PITCH_ROWS; row++) {
@@ -97,7 +127,8 @@ export class PitchComponent implements OnInit, OnChanges {
           col: col,
           availableMove: false,
           rush: false,
-          highlighted: false
+          highlighted: false,
+          displayedMove: false
         };
 
         this.pitchSquares.push(newPitchSquare);
@@ -105,12 +136,21 @@ export class PitchComponent implements OnInit, OnChanges {
     }
   }
 
-  private FindPlayerOnSquare(position: PitchPosition) {
+  private FindPitchPlayer(position: PitchPosition) {
     const clickedOnPlayerPosition = this.players.find(player =>
       player.row === position.row
       && player.col === position.col
      );
 
-     return clickedOnPlayerPosition?.player;
+     return clickedOnPlayerPosition;
+  }
+
+  private FindAvailableMovePosition(position: PitchPosition) {
+    const clickedOnPlayerPosition = this.availableMoves.find(pitchPosition =>
+      pitchPosition.row === position.row
+      && pitchPosition.col === position.col
+     );
+
+     return clickedOnPlayerPosition;
   }
 }

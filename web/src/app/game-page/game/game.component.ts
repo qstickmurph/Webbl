@@ -27,6 +27,7 @@ export class GameComponent {
   public players: PlayerPosition[] = []
   public selectedPlayer?: PlayerPosition;
   public availableMoves: MovementPosition[] = [];
+  public displayedMoves: PitchPosition[] = [];
 
   constructor() {
     this.players = DEFAULT_PITCH_PLAYERS;
@@ -40,6 +41,14 @@ export class GameComponent {
 
     this.selectedPlayer = selectedPlayerPosition;
     this.availableMoves = this.availableMovesService.GetAvailableMoves(this.selectedPlayer, this.players);
+  }
+
+  onClickAvailableMove(position: PitchPosition) {
+    if (!this.selectedPlayer) {
+      return;
+    }
+
+    this.displayedMoves = this.movePathService.GetBestPath(this.selectedPlayer, position, this.players);
   }
 
   onDblClickAvailableMove(position: PitchPosition) {
@@ -61,5 +70,6 @@ export class GameComponent {
   private deselectPlayer() {
     this.selectedPlayer = undefined;
     this.availableMoves = [];
+    this.displayedMoves = [];
   }
 }

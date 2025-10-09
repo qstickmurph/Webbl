@@ -5,7 +5,9 @@
     [players]="players"
     [selectedPlayer]="selectedPlayer?.player"
     [availableMoves]="availableMoves"
-    (clickedOnPlayer)="onClickedOnPlayer($event)"
+    [displayedMoves]="displayedMoves"
+    (clickOnPlayer)="onClickedOnPlayer($event)"
+    (clickOnAvailableMove)="onClickAvailableMove($event)"
     (dblClickOnAvailableMove)="onDblClickAvailableMove($event)"
     (contextmenu)="onRightClick($event)"
   ></app-pitch>
