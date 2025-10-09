@@ -41,6 +41,7 @@ export class GameComponent {
 
     this.selectedPlayer = selectedPlayerPosition;
     this.availableMoves = this.availableMovesService.GetAvailableMoves(this.selectedPlayer, this.players);
+    this.displayedMoves = [];
   }
 
   onClickAvailableMove(position: PitchPosition) {

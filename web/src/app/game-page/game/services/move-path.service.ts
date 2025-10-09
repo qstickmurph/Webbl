@@ -94,10 +94,10 @@ export class MovePathService {
   }
 
   private GetDistance(start: PitchPosition, end: PitchPosition) {
-    return Math.min(
-      Math.abs(start.row - end.row),
-      Math.abs(start.col - end.col)
-    );
+    return Math.sqrt(
+      Math.pow(start.row - end.row, 2)
+      + Math.pow(start.col - end.col, 2)
+    ) / Math.sqrt(2);
   }
 
   private ReconstructPath(endPosition: PitchPositionDistance) {
