@@ -12,6 +12,7 @@ type PitchSquare = {
   availableMove: boolean,
   rush: boolean,
   displayedMove: boolean,
+  text: string,
   highlighted: boolean
 }
 
@@ -101,7 +102,7 @@ export class PitchComponent implements OnInit, OnChanges {
   private setupPitchSquareDisplayedMoves(displayedMoves: PitchPosition[]) {
     this.resetDisplayedMoves();
 
-    displayedMoves.forEach(move => {
+    displayedMoves.forEach((move, i) => {
       const square = this.pitchSquares.find(square =>
         square.position.row === move.row
         && square.position.col === move.col
@@ -109,13 +110,16 @@ export class PitchComponent implements OnInit, OnChanges {
 
       if (square) {
         square.displayedMove = true;
+
+        square.text = square.text.length > 0 ? square.text + `; ${i.toString()}`: i.toString();
       }
     });
   }
 
   private resetDisplayedMoves() {
     this.pitchSquares.forEach(square => {
-        square.displayedMove = false
+        square.displayedMove = false;
+        square.text = '';
     });
   }
 
@@ -131,7 +135,8 @@ export class PitchComponent implements OnInit, OnChanges {
           availableMove: false,
           rush: false,
           highlighted: false,
-          displayedMove: false
+          displayedMove: false,
+          text: ''
         };
 
         this.pitchSquares.push(newPitchSquare);

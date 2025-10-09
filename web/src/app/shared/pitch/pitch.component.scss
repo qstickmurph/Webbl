@@ -59,6 +59,12 @@ app-player-icon {
   &.displayedMove {
     background-color: rgba(255, 0, 0, 0.3) !important;
   }
+
+  p {
+    line-height: var(--square-height);
+    color: black;
+    text-align: center;
+  }
 }
 
 .col-0 {

@@ -10,7 +10,11 @@
       (dblclick)="onDblClickOnPitchSquare(pitchSquare)"
       (mouseenter)="onMouseEnterPitchSquare(pitchSquare)"
       (mouseleave)="onMouseLeavePitchSquare(pitchSquare)"
-    ></div>
+    >
+      @if (pitchSquare.text) {
+        <p>{{ pitchSquare.text }}</p>
+      }
+    </div>
   }
 
   @for (playerPosition of players; track playerPosition.player.id) {
