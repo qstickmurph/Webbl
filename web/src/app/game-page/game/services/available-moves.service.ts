@@ -39,8 +39,6 @@ export class AvailableMovesService {
         move => this.IsOnPlayer(move, playerPositions) && !this.IsAlreadyAdded(move, reachablePlayers)
       );
 
-      console.log(nextAvailableMoves);
-
       availableMoves.push(...nextAvailableMoves);
       reachablePlayers.push(...nextReachablePlayers);
     }

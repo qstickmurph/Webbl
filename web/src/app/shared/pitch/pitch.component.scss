@@ -9,6 +9,11 @@
   border-color: white;
   border-width: 2px;
   border-style: solid;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .pitch {
@@ -30,9 +35,7 @@ app-player-icon {
   height: var(--square-height);
   width: var(--square-width);
 
-  &.selected {
-    outline: 2px #000 solid;
-  }
+  pointer-events: none;
 }
 
 .pitchSquare {
@@ -41,7 +44,7 @@ app-player-icon {
   height: var(--square-height);
   width: var(--square-width);
 
-  &:hover {
+  &.highlighted {
     background-color: rgba(0, 0, 255, 0.3) !important;
   }
 
@@ -53,7 +56,6 @@ app-player-icon {
     }
   }
 }
-
 
 .col-0 {
   left: calc(0 * var(--square-width));

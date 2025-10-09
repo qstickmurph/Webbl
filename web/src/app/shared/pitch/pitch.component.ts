@@ -9,7 +9,8 @@ interface PitchSquare extends PitchPosition {
   row: number,
   col: number,
   availableMove: boolean,
-  rush: boolean
+  rush: boolean,
+  highlighted: boolean
 }
 
 @Component({
@@ -24,6 +25,7 @@ export class PitchComponent implements OnInit, OnChanges {
   @Input() public players: PlayerPosition[] = [];
   @Input() public selectedPlayer?: Player;
   @Input() public availableMoves: MovementPosition[] = [];
+  @Input() public displayedMoves: PitchPosition[] = [];
 
   @Output() public clickedOnPlayer = new EventEmitter<Player>();
   @Output() public dblClickOnAvailableMove = new EventEmitter<PitchPosition>();
@@ -31,12 +33,26 @@ export class PitchComponent implements OnInit, OnChanges {
   public moveType = MoveType;
   public pitchSquares: PitchSquare[] = [];
 
-  onClickedOnPlayer(player: Player) {
-    this.clickedOnPlayer.emit(player);
+  onClickOnPitchSquare(pitchSquare: PitchSquare) {
+    const playerClickedOn = this.FindPlayerOnSquare(pitchSquare);
+
+    if (playerClickedOn) {
+      this.clickedOnPlayer.emit(playerClickedOn);
+    }
   }
 
-  onDblClickOnAvailableMove(availableMove: PitchPosition) {
-    this.dblClickOnAvailableMove.emit(availableMove);
+  onDblClickOnPitchSquare(pitchSquare: PitchSquare) {
+    if (pitchSquare.availableMove) {
+      this.dblClickOnAvailableMove.emit(pitchSquare);
+    }
+  }
+
+  onMouseEnterPitchSquare(pitchSquare: PitchSquare) {
+    pitchSquare.highlighted = true;
+  }
+
+  onMouseLeavePitchSquare(pitchSquare: PitchSquare) {
+    pitchSquare.highlighted = false;
   }
 
   ngOnInit() {
@@ -45,17 +61,18 @@ export class PitchComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
       if(changes['availableMoves']) {
-        this.setupAvailableMoves(changes['availableMoves'].currentValue);
+        this.setupPitchSquareAvailableMoves(changes['availableMoves'].currentValue);
       }
   }
 
-  private setupAvailableMoves(availableMoves: MovementPosition[]) {
+  private setupPitchSquareAvailableMoves(availableMoves: MovementPosition[]) {
     this.resetAvailableMoves();
 
     availableMoves.forEach(move => {
       const square = this.pitchSquares.find(square =>
-                                            square.row === move.row
-                                            && square.col === move.col);
+        square.row === move.row
+        && square.col === move.col
+      );
 
       if (square) {
         square.availableMove = true;
@@ -79,11 +96,21 @@ export class PitchComponent implements OnInit, OnChanges {
           row: row,
           col: col,
           availableMove: false,
-          rush: false
+          rush: false,
+          highlighted: false
         };
 
         this.pitchSquares.push(newPitchSquare);
       }
     }
+  }
+
+  private FindPlayerOnSquare(position: PitchPosition) {
+    const clickedOnPlayerPosition = this.players.find(player =>
+      player.row === position.row
+      && player.col === position.col
+     );
+
+     return clickedOnPlayerPosition?.player;
   }
 }

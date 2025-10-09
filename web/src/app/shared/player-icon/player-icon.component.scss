@@ -1,3 +1,9 @@
+:host {
+  &.selected {
+    outline: 2px #000 solid;
+  }
+}
+
 img {
   position: absolute;
   height: 80%;
