@@ -1,5 +1,5 @@
 import { AvailableMovesService } from './services/available-moves.service';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PitchComponent } from '../../shared/pitch/pitch.component';
 import { ScoreboardComponent } from '../../shared/scoreboard/scoreboard.component';
 import { ChatLogComponent } from '../../shared/chat-log/chat-log.component';
@@ -9,6 +9,8 @@ import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
 import { MovePathService } from './services/move-path.service';
 import { PlayerPosition } from '../../models/player-position.model';
 import { MovementPosition } from '../../models/movement-position.model';
+import { TackleZonePosition } from '../../models/tackle-zone-position.model';
+import { TackleZoneService } from './services/tackle-zone.service';
 
 @Component({
   selector: 'app-game',
@@ -21,16 +23,18 @@ import { MovementPosition } from '../../models/movement-position.model';
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
-export class GameComponent {
+export class GameComponent implements OnInit {
   private availableMovesService = inject(AvailableMovesService);
   private movePathService = inject(MovePathService);
+  private tackleZoneService = inject(TackleZoneService);
 
   public players: PlayerPosition[] = []
   public selectedPlayerPosition?: PlayerPosition;
   public availableMoves: MovementPosition[] = [];
   public displayedMoves: PitchPosition[] = [];
+  public tackleZones: TackleZonePosition[] = [];
 
-  constructor() {
+  ngOnInit() {
     this.players = DEFAULT_PITCH_PLAYERS;
   }
 
@@ -38,6 +42,7 @@ export class GameComponent {
     this.selectedPlayerPosition = playerPosition;
     this.availableMoves = this.availableMovesService.GetAvailableMoves(this.selectedPlayerPosition, this.players,  this.selectedPlayerPosition.player.ma);
     this.displayedMoves = [];
+    this.tackleZones = this.tackleZoneService.getTackleZones(this.players, this.selectedPlayerPosition.player.team);
   }
 
   onClickAvailableMove(position: PitchPosition) {
@@ -73,5 +78,6 @@ export class GameComponent {
     this.selectedPlayerPosition = undefined;
     this.availableMoves = [];
     this.displayedMoves = [];
+    this.tackleZones = [];
   }
 }

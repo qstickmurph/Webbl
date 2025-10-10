@@ -6,6 +6,7 @@ import { MoveType } from '../../enums/move-type.enum';
 import { MovementPosition } from '../../models/movement-position.model';
 import { PlayerPosition } from '../../models/player-position.model';
 import { PITCH_COLS, PITCH_ROWS } from '../../constants/pitch-dimensions.constants';
+import { TackleZonePosition } from '../../models/tackle-zone-position.model';
 
 type PitchSquare = {
   position: PitchPosition;
@@ -13,6 +14,7 @@ type PitchSquare = {
   rush: boolean,
   displayedMove: boolean,
   text: string,
+  tackleZones: number,
   highlighted: boolean
 }
 
@@ -29,6 +31,7 @@ export class PitchComponent implements OnInit, OnChanges {
   @Input() public selectedPlayer?: Player;
   @Input() public availableMoves: MovementPosition[] = [];
   @Input() public displayedMoves: PitchPosition[] = [];
+  @Input() public tackleZones: TackleZonePosition[] = [];
 
   @Output() public clickOnPlayer = new EventEmitter<PlayerPosition>();
   @Output() public clickOnAvailableMove = new EventEmitter<PitchPosition>();
@@ -73,6 +76,10 @@ export class PitchComponent implements OnInit, OnChanges {
 
       if(changes['displayedMoves']) {
         this.setupPitchSquareDisplayedMoves(changes['displayedMoves'].currentValue);
+      }
+
+      if(changes['tackleZones']) {
+        this.setupPitchSquareTackleZones(changes['tackleZones'].currentValue);
       }
   }
 
@@ -123,6 +130,27 @@ export class PitchComponent implements OnInit, OnChanges {
     });
   }
 
+  private setupPitchSquareTackleZones(tackleZones: TackleZonePosition[]) {
+    this.resetTackleZones()
+
+    tackleZones.forEach(tackleZone => {
+      const square = this.pitchSquares.find(square =>
+        square.position.row === tackleZone.row
+        && square.position.col === tackleZone.col
+      );
+
+      if (square) {
+        square.tackleZones = tackleZone.numTackleZones;
+      }
+    });
+  }
+
+  private resetTackleZones() {
+    this.pitchSquares.forEach(square => {
+        square.tackleZones = 0;
+    });
+  }
+
   private setupPitchSquares() {
     this.pitchSquares = [];
     for (let row: number = 0; row < PITCH_ROWS; row++) {
@@ -136,7 +164,8 @@ export class PitchComponent implements OnInit, OnChanges {
           rush: false,
           highlighted: false,
           displayedMove: false,
-          text: ''
+          text: '',
+          tackleZones: 0
         };
 
         this.pitchSquares.push(newPitchSquare);

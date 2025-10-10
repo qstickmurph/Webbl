@@ -1,7 +1,7 @@
 <div class="pitch">
   @for(pitchSquare of pitchSquares; track $index) {
     <div
-      class="pitchSquare row-{{pitchSquare.position.row}} col-{{pitchSquare.position.col}}"
+      class="pitchSquare row-{{pitchSquare.position.row}} col-{{pitchSquare.position.col}} tackleZones-{{pitchSquare.tackleZones}}"
       [class.highlighted]="pitchSquare.highlighted"
       [class.availableMove]="pitchSquare.availableMove"
       [class.displayedMove]="pitchSquare.displayedMove"

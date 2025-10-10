@@ -57,13 +57,31 @@ app-player-icon {
   }
 
   &.displayedMove {
-    background-color: rgba(255, 0, 0, 0.3) !important;
+    // Placeholder
   }
 
   p {
     line-height: var(--square-height);
     color: black;
     text-align: center;
+  }
+}
+
+.pitchSquare {
+  &.tackleZones-1 {
+    background-color: rgba(255, 255, 0, 0.3) !important;
+  }
+
+  &.tackleZones-2 {
+    background-color: rgba(255, 150, 0, 0.3) !important;
+  }
+
+  &.tackleZones-3 {
+    background-color: rgba(255, 75, 0, 0.3) !important;
+  }
+
+  &.tackleZones-4, &.tackleZones-5, &.tackleZones-6, &.tackleZones-7, &.tackleZones-8 {
+    background-color: rgba(255, 0, 0, 0.3) !important;
   }
 }
 
