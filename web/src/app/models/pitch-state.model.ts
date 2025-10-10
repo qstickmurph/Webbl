@@ -1,3 +1,4 @@
+import { BehaviorSubject } from "rxjs";
 import { PITCH_COLS, PITCH_ROWS } from "../constants/pitch-dimensions.constants";
 import { MoveType } from "../enums/move-type.enum";
 import { MovementPosition } from "./movement-position.model";
@@ -63,6 +64,14 @@ export class PitchState {
   public set tackleZones(tackleZones: TackleZonePosition[]) {
     this._tackleZones = tackleZones;
     this.setupPitchDisplaySquareTackleZones();
+  }
+
+  public MovePlayer(player: PlayerPosition, position: PitchPosition) {
+    const originPitchDisplaySquare = player.FindIn(this.pitchDisplaySquares);
+    originPitchDisplaySquare!.player = undefined;
+    player.MoveTo(position);
+    const destPitchDisplaySquare = position.FindIn(this.pitchDisplaySquares);
+    destPitchDisplaySquare!.player = player.player;
   }
 
   private initializePitchDisplaySquares() {

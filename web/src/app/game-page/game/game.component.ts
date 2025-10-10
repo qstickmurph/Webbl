@@ -64,7 +64,7 @@ export class GameComponent implements OnInit {
       return;
     }
 
-    this.pitchState.selectedPlayerPosition.MoveTo(position);
+    this.pitchState.MovePlayer(this.pitchState.selectedPlayerPosition, position);
     this.deselectPlayer();
   }
 
