@@ -1,28 +1,23 @@
 <div class="pitch">
-  @for(pitchSquare of pitchSquares; track $index) {
+  @for (pitchDisplaySquare of pitchState.pitchDisplaySquares; track $index) {
     <div
-      class="pitchSquare row-{{pitchSquare.position.row}} col-{{pitchSquare.position.col}} tackleZones-{{pitchSquare.tackleZones}}"
-      [class.highlighted]="pitchSquare.highlighted"
-      [class.availableMove]="pitchSquare.availableMove"
-      [class.displayedMove]="pitchSquare.displayedMove"
-      [class.rush]="pitchSquare.rush"
-      (mousedown)="onClickOnPitchSquare(pitchSquare)"
-      (dblclick)="onDblClickOnPitchSquare(pitchSquare)"
-      (mouseenter)="onMouseEnterPitchSquare(pitchSquare)"
-      (mouseleave)="onMouseLeavePitchSquare(pitchSquare)"
+      class="pitchSquare row-{{pitchDisplaySquare.row}} col-{{pitchDisplaySquare.col}}"
+      [style.background-color]="pitchDisplaySquare.getBackgroundColor()"
+      (mousedown)="onClickOnPitchSquare(pitchDisplaySquare)"
+      (dblclick)="onDblClickOnPitchSquare(pitchDisplaySquare)"
+      (mouseenter)="onMouseEnterPitchSquare(pitchDisplaySquare)"
+      (mouseleave)="onMouseLeavePitchSquare(pitchDisplaySquare)"
     >
-      @if (pitchSquare.text) {
-        <p>{{ pitchSquare.text }}</p>
+      @if (pitchDisplaySquare.player) {
+        <app-player-icon
+          id="playerIcon-{{ pitchDisplaySquare.player.id }}"
+          [class.selected]="pitchDisplaySquare.isSelectedPlayer"
+          [player]="pitchDisplaySquare.player"
+        ></app-player-icon>
+      }
+      @for (moveNum of pitchDisplaySquare.moveNums; track $index) {
+        <p>{{ moveNum }}</p>
       }
     </div>
-  }
-
-  @for (playerPosition of players; track playerPosition.player.id) {
-    <app-player-icon
-      id="playerIcon-{{ playerPosition.player.id }}"
-      class="row-{{ playerPosition.row }} col-{{ playerPosition.col}}"
-      [class.selected]="playerPosition.player.id === selectedPlayer?.id"
-      [player]="playerPosition.player"
-    ></app-player-icon>
   }
 </div>

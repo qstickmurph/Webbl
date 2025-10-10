@@ -2,11 +2,7 @@
 </div>
 <div class="pitch-container">
   <app-pitch
-    [players]="players"
-    [selectedPlayer]="selectedPlayerPosition?.player"
-    [availableMoves]="availableMoves"
-    [displayedMoves]="displayedMoves"
-    [tackleZones]="tackleZones"
+    [pitchState]="pitchState"
     (clickOnPlayer)="onClickedOnPlayer($event)"
     (clickOnAvailableMove)="onClickAvailableMove($event)"
     (dblClickOnAvailableMove)="onDblClickAvailableMove($event)"

@@ -1,6 +1,7 @@
-<a
-  *ngFor="let button of buttons"
-  [routerLink]="button.link"
-  class="nav-bar-button-title"
-  draggable="false"
->{{button.title}}</a>
+@for (button of buttons; track $index) {
+  <a
+    [routerLink]="button.link"
+    class="nav-bar-button-title"
+    draggable="false"
+  >{{button.title}}</a>
+}

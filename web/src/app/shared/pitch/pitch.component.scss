@@ -31,11 +31,9 @@
 }
 
 app-player-icon {
-  position: absolute;
-  height: var(--square-height);
-  width: var(--square-width);
-
-  pointer-events: none;
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 
 .pitchSquare {
@@ -43,46 +41,12 @@ app-player-icon {
   position: absolute;
   height: var(--square-height);
   width: var(--square-width);
-
-  &.highlighted {
-    background-color: rgba(0, 0, 255, 0.3) !important;
-  }
-
-  &.availableMove {
-    background-color: rgba(255, 255, 255, 0.3);
-
-    &.rush {
-      background-color: rgba(150, 150, 150, 0.3);
-    }
-  }
-
-  &.displayedMove {
-    // Placeholder
-  }
-
-  p {
-    line-height: var(--square-height);
-    color: black;
-    text-align: center;
-  }
 }
 
-.pitchSquare {
-  &.tackleZones-1 {
-    background-color: rgba(255, 255, 0, 0.3) !important;
-  }
-
-  &.tackleZones-2 {
-    background-color: rgba(255, 150, 0, 0.3) !important;
-  }
-
-  &.tackleZones-3 {
-    background-color: rgba(255, 75, 0, 0.3) !important;
-  }
-
-  &.tackleZones-4, &.tackleZones-5, &.tackleZones-6, &.tackleZones-7, &.tackleZones-8 {
-    background-color: rgba(255, 0, 0, 0.3) !important;
-  }
+.pitchSquare p {
+  line-height: var(--square-height);
+  color: black;
+  text-align: center;
 }
 
 .col-0 {

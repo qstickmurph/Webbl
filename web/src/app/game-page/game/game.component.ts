@@ -8,9 +8,8 @@ import { PitchPosition } from '../../models/pitch-position.model';
 import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
 import { MovePathService } from './services/move-path.service';
 import { PlayerPosition } from '../../models/player-position.model';
-import { MovementPosition } from '../../models/movement-position.model';
-import { TackleZonePosition } from '../../models/tackle-zone-position.model';
 import { TackleZoneService } from './services/tackle-zone.service';
+import { PitchState } from '../../models/pitch-state.model';
 
 @Component({
   selector: 'app-game',
@@ -28,44 +27,44 @@ export class GameComponent implements OnInit {
   private movePathService = inject(MovePathService);
   private tackleZoneService = inject(TackleZoneService);
 
-  public players: PlayerPosition[] = []
-  public selectedPlayerPosition?: PlayerPosition;
-  public availableMoves: MovementPosition[] = [];
-  public displayedMoves: PitchPosition[] = [];
-  public tackleZones: TackleZonePosition[] = [];
+  public pitchState: PitchState = new PitchState();
 
   ngOnInit() {
-    this.players = DEFAULT_PITCH_PLAYERS;
+    this.pitchState.players = DEFAULT_PITCH_PLAYERS;
   }
 
   onClickedOnPlayer(playerPosition: PlayerPosition) {
-    this.selectedPlayerPosition = playerPosition;
-    this.availableMoves = this.availableMovesService.GetAvailableMoves(this.selectedPlayerPosition, this.players,  this.selectedPlayerPosition.player.ma);
-    this.displayedMoves = [];
-    this.tackleZones = this.tackleZoneService.getTackleZones(this.players, this.selectedPlayerPosition.player.team);
+    this.pitchState.selectedPlayerPosition = playerPosition;
+    this.pitchState.availableMoves = this.availableMovesService.GetAvailableMoves(
+      this.pitchState.selectedPlayerPosition,
+      this.pitchState.players,
+      this.pitchState.selectedPlayerPosition.player.ma
+    );
+    this.pitchState.displayedMoves = [];
+    this.pitchState.tackleZones = this.tackleZoneService.getTackleZones(this.pitchState.players, this.pitchState.selectedPlayerPosition.player.team);
   }
 
   onClickAvailableMove(position: PitchPosition) {
-    if (!this.selectedPlayerPosition) {
+    if (!this.pitchState.selectedPlayerPosition) {
       return;
     }
 
-    const startPosition = this.displayedMoves.length > 0 ? this.displayedMoves.at(-1)! : this.selectedPlayerPosition;
-    const newPathMoves = this.movePathService.GetBestPath(startPosition, position, this.players);
-    this.displayedMoves = [
-      ...this.displayedMoves,
+    const startPosition = this.pitchState.displayedMoves.length > 0 ? this.pitchState.displayedMoves.at(-1)! : this.pitchState.selectedPlayerPosition;
+    const newPathMoves = this.movePathService.GetBestPath(startPosition, position, this.pitchState.players);
+    this.pitchState.displayedMoves = [
+      ...this.pitchState.displayedMoves,
       ...newPathMoves.slice(1)
     ];
-    const remainingMovement = this.selectedPlayerPosition.player.ma - this.displayedMoves.length;
-    this.availableMoves = this.availableMovesService.GetAvailableMoves(this.displayedMoves.at(-1)!, this.players, remainingMovement);
+    const remainingMovement = this.pitchState.selectedPlayerPosition.player.ma - this.pitchState.displayedMoves.length;
+    this.pitchState.availableMoves = this.availableMovesService.GetAvailableMoves(this.pitchState.displayedMoves.at(-1)!, this.pitchState.players, remainingMovement);
   }
 
   onDblClickAvailableMove(position: PitchPosition) {
-    if (!this.selectedPlayerPosition) {
+    if (!this.pitchState.selectedPlayerPosition) {
       return;
     }
 
-    this.selectedPlayerPosition.MoveTo(position);
+    this.pitchState.selectedPlayerPosition.MoveTo(position);
     this.deselectPlayer();
   }
 
@@ -75,9 +74,9 @@ export class GameComponent implements OnInit {
   }
 
   private deselectPlayer() {
-    this.selectedPlayerPosition = undefined;
-    this.availableMoves = [];
-    this.displayedMoves = [];
-    this.tackleZones = [];
+    this.pitchState.selectedPlayerPosition = undefined;
+    this.pitchState.availableMoves = [];
+    this.pitchState.displayedMoves = [];
+    this.pitchState.tackleZones = [];
   }
 }
