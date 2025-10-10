@@ -30,7 +30,7 @@ export class MovePathService {
       const currentPositionDistance = openSet.shift()!;
 
       if (currentPositionDistance.position.IsEqual(end)) {
-        return this.ReconstructPath(currentPositionDistance);
+        return this.ReconstructPath(currentPositionDistance).slice(1);
       }
 
       for (const moveDirection of this.MOVE_DIRECTIONS) {

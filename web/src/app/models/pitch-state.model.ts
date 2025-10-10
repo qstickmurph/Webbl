@@ -148,7 +148,7 @@ export class PitchState {
 
       if (square) {
         square.isDisplayedMove = true;
-        square.moveNums.push(i);
+        square.moveNums.push(i+1);
       }
     });
   }

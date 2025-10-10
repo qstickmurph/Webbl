@@ -53,7 +53,7 @@ export class GameComponent implements OnInit {
     const newPathMoves = this.movePathService.GetBestPath(startPosition, position, this.pitchState.players);
     this.pitchState.displayedMoves = [
       ...this.pitchState.displayedMoves,
-      ...newPathMoves.slice(1)
+      ...newPathMoves
     ];
     const remainingMovement = this.pitchState.selectedPlayerPosition.player.ma - this.pitchState.displayedMoves.length;
     this.pitchState.availableMoves = this.availableMovesService.GetAvailableMoves(this.pitchState.displayedMoves.at(-1)!, this.pitchState.players, remainingMovement);
