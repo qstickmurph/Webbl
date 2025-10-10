@@ -1,4 +1,3 @@
-import { BehaviorSubject } from "rxjs";
 import { PITCH_COLS, PITCH_ROWS } from "../constants/pitch-dimensions.constants";
 import { MoveType } from "../enums/move-type.enum";
 import { MovementPosition } from "./movement-position.model";
@@ -7,8 +6,9 @@ import { PitchPosition } from "./pitch-position.model";
 import { PlayerPosition } from "./player-position.model";
 import { TackleZonePosition } from "./tackle-zone-position.model";
 
+const playerAnimationSpeed = 250;
 
-export class PitchState {
+export class PitchDisplayState {
   private _players: PlayerPosition[] = [];
   private _selectedPlayerPosition?: PlayerPosition;
   private _availableMoves: MovementPosition[] = [];
@@ -16,6 +16,7 @@ export class PitchState {
   private _tackleZones: TackleZonePosition[] = [];
 
   public pitchDisplaySquares: PitchDisplaySquare[] = [];
+  public animating: boolean = false;
 
   constructor() {
     this.initializePitchDisplaySquares();
@@ -66,7 +67,19 @@ export class PitchState {
     this.setupPitchDisplaySquareTackleZones();
   }
 
-  public MovePlayer(player: PlayerPosition, position: PitchPosition) {
+  public MovePlayerAlongPath(player: PlayerPosition, path: PitchPosition[], index: number = 0) {
+    this.animating = true;
+    if(index === path.length) {
+      this.animating = false;
+      return;
+    }
+
+    setTimeout(() => this.MovePlayerAlongPath(player, path, index+1), playerAnimationSpeed);
+
+    this.MovePlayerNextSquare(player, path[index]);
+  }
+
+  private MovePlayerNextSquare(player: PlayerPosition, position: PitchPosition) {
     const originPitchDisplaySquare = player.FindIn(this.pitchDisplaySquares);
     originPitchDisplaySquare!.player = undefined;
     player.MoveTo(position);

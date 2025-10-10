@@ -9,7 +9,7 @@ import { DEFAULT_PITCH_PLAYERS } from '../../constants/pitch-constants';
 import { MovePathService } from './services/move-path.service';
 import { PlayerPosition } from '../../models/player-position.model';
 import { TackleZoneService } from './services/tackle-zone.service';
-import { PitchState } from '../../models/pitch-state.model';
+import { PitchDisplayState } from '../../models/pitch-display-state.model';
 
 @Component({
   selector: 'app-game',
@@ -27,7 +27,7 @@ export class GameComponent implements OnInit {
   private movePathService = inject(MovePathService);
   private tackleZoneService = inject(TackleZoneService);
 
-  public pitchState: PitchState = new PitchState();
+  public pitchState: PitchDisplayState = new PitchDisplayState();
 
   ngOnInit() {
     this.pitchState.players = DEFAULT_PITCH_PLAYERS;
@@ -64,7 +64,7 @@ export class GameComponent implements OnInit {
       return;
     }
 
-    this.pitchState.MovePlayer(this.pitchState.selectedPlayerPosition, position);
+    this.pitchState.MovePlayerAlongPath(this.pitchState.selectedPlayerPosition, this.pitchState.displayedMoves);
     this.deselectPlayer();
   }
 

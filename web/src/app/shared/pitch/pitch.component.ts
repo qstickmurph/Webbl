@@ -3,7 +3,7 @@ import { PlayerIconComponent } from '../player-icon/player-icon.component'
 import { PitchPosition } from '../../models/pitch-position.model';
 import { MoveType } from '../../enums/move-type.enum';
 import { PlayerPosition } from '../../models/player-position.model';
-import { PitchState } from '../../models/pitch-state.model';
+import { PitchDisplayState } from '../../models/pitch-display-state.model';
 import { PitchDisplaySquare } from '../../models/pitch-display-square.model';
 
 
@@ -16,7 +16,7 @@ import { PitchDisplaySquare } from '../../models/pitch-display-square.model';
   styleUrl: './pitch.component.scss'
 })
 export class PitchComponent {
-  @Input({ required: true }) public pitchState!: PitchState;
+  @Input({ required: true }) public pitchState!: PitchDisplayState;
 
   @Output() public clickOnPlayer = new EventEmitter<PlayerPosition>();
   @Output() public clickOnAvailableMove = new EventEmitter<PitchPosition>();
@@ -25,6 +25,10 @@ export class PitchComponent {
   public moveType = MoveType;
 
   onClickOnPitchSquare(pitchSquare: PitchDisplaySquare) {
+    if (this.pitchState.animating) {
+      return;
+    }
+
     const playerPositionClickedOn = pitchSquare.FindIn(this.pitchState.players);
     const availableMoveClickedOn = pitchSquare.FindIn(this.pitchState.availableMoves);
 
@@ -36,6 +40,10 @@ export class PitchComponent {
   }
 
   onDblClickOnPitchSquare(pitchSquare: PitchDisplaySquare) {
+    if (this.pitchState.animating) {
+      return;
+    }
+
     if (pitchSquare.isAvailableMove) {
       this.dblClickOnAvailableMove.emit(pitchSquare);
     }
