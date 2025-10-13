@@ -20,6 +20,7 @@ export class PitchDisplaySquare extends PitchPosition {
   isDisplayedMove: boolean;
   isHighlighted: boolean;
   moveNums: number[];
+  displayedOdds: number[];
   tackleZones: number;
 
   constructor(row: number, col: number) {
@@ -31,6 +32,7 @@ export class PitchDisplaySquare extends PitchPosition {
     this.isDisplayedMove = false;
     this.isHighlighted = false;
     this.moveNums = [];
+    this.displayedOdds = [];
     this.tackleZones = 0;
   }
 

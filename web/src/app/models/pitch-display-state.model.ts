@@ -162,6 +162,7 @@ export class PitchDisplayState {
       if (square) {
         square.isDisplayedMove = true;
         square.moveNums.push(i+1);
+        square.displayedOdds.push(1);
       }
     });
   }
@@ -170,6 +171,7 @@ export class PitchDisplayState {
     this.pitchDisplaySquares.forEach(square => {
         square.isDisplayedMove = false;
         square.moveNums = [];
+        square.displayedOdds = [];
     });
   }
 

@@ -5,12 +5,14 @@ import { MoveType } from '../../models/move-type.enum';
 import { PlayerPosition } from '../../models/player-position.model';
 import { PitchDisplayState } from '../../models/pitch-display-state.model';
 import { PitchDisplaySquare } from '../../models/pitch-display-square.model';
+import { OddsPopoverComponent } from '../odds-popover/odds-popover.component';
 
 
 @Component({
   selector: 'app-pitch',
   imports: [
-    PlayerIconComponent
+    PlayerIconComponent,
+    OddsPopoverComponent
   ],
   templateUrl: './pitch.component.html',
   styleUrl: './pitch.component.scss'

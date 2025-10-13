@@ -36,6 +36,12 @@ app-player-icon {
   width: 100%;
 }
 
+app-odds-popover {
+  position: absolute;
+  left: calc(100% - 10px);
+  top: calc(100% - 10px);
+}
+
 .pitchSquare {
   display: block;
   position: absolute;

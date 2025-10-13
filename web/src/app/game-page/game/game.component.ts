@@ -64,6 +64,10 @@ export class GameComponent implements OnInit {
       return;
     }
 
+    if(!this.pitchState.displayedMoves.at(-1)?.IsEqual(position)) {
+      this.onClickAvailableMove(position);
+    }
+
     this.pitchState.MovePlayerAlongPath(this.pitchState.selectedPlayerPosition, this.pitchState.displayedMoves);
     this.deselectPlayer();
   }
