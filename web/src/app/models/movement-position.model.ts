@@ -1,4 +1,4 @@
-import { MoveType } from "../enums/move-type.enum";
+import { MoveType } from "../models/move-type.enum";
 import { PitchPosition } from "./pitch-position.model";
 
 export class MovementPosition extends PitchPosition {

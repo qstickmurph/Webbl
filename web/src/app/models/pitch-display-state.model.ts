@@ -1,5 +1,5 @@
 import { PITCH_COLS, PITCH_ROWS } from "../constants/pitch-dimensions.constants";
-import { MoveType } from "../enums/move-type.enum";
+import { MoveType } from "../models/move-type.enum";
 import { MovementPosition } from "./movement-position.model";
 import { PitchDisplaySquare } from "./pitch-display-square.model";
 import { PitchPosition } from "./pitch-position.model";

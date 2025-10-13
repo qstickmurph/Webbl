@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { MoveType } from "../../../enums/move-type.enum";
+import { MoveType } from "../../../models/move-type.enum";
 import { PitchPosition } from "../../../models/pitch-position.model";
 import { MovementPosition } from "../../../models/movement-position.model";
 

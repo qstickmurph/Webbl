@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PlayerIconComponent } from '../player-icon/player-icon.component'
 import { PitchPosition } from '../../models/pitch-position.model';
-import { MoveType } from '../../enums/move-type.enum';
+import { MoveType } from '../../models/move-type.enum';
 import { PlayerPosition } from '../../models/player-position.model';
 import { PitchDisplayState } from '../../models/pitch-display-state.model';
 import { PitchDisplaySquare } from '../../models/pitch-display-square.model';

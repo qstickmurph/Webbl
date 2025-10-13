@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Team } from '../../enums/team.enum';
+import { Team } from '../../models/team.enum';
 import { Player } from '../../models/player.model';
 
 @Component({

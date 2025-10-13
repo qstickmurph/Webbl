@@ -1,4 +1,4 @@
-import { Team } from "../enums/team.enum";
+import { Team } from "../models/team.enum";
 import { v4 as uuid } from 'uuid';
 
 export class Player {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Team } from '../../../enums/team.enum';
+import { Team } from '../../../models/team.enum';
 import { PlayerPosition } from '../../../models/player-position.model';
 import { TackleZonePosition } from '../../../models/tackle-zone-position.model';
 
