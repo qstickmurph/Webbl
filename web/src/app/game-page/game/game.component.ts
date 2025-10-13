@@ -10,6 +10,8 @@ import { MovePathService } from './services/move-path.service';
 import { PlayerPosition } from '../../models/player-position.model';
 import { TackleZoneService } from './services/tackle-zone.service';
 import { PitchDisplayState } from '../../models/pitch-display-state.model';
+import { GameOddsService } from './services/game-odds.service';
+import { OddsPosition } from '../../models/odds-position.model';
 
 @Component({
   selector: 'app-game',
@@ -25,6 +27,7 @@ import { PitchDisplayState } from '../../models/pitch-display-state.model';
 export class GameComponent implements OnInit {
   private availableMovesService = inject(AvailableMovesService);
   private movePathService = inject(MovePathService);
+  private gameOddsService = inject(GameOddsService);
   private tackleZoneService = inject(TackleZoneService);
 
   public pitchState: PitchDisplayState = new PitchDisplayState();
@@ -49,14 +52,45 @@ export class GameComponent implements OnInit {
       return;
     }
 
-    const startPosition = this.pitchState.displayedMoves.length > 0 ? this.pitchState.displayedMoves.at(-1)! : this.pitchState.selectedPlayerPosition;
+    this.addBestPathToDisplayedMoves(position);
+    this.calculateOddsFromDisplayedMoves();
+    this.setAvailableMovesFromSelectedPosition();
+  }
+
+  private addBestPathToDisplayedMoves(position: PitchPosition) {
+    const startPosition = this.pitchState.displayedMoves.length > 0 ? this.pitchState.displayedMoves.at(-1)! : this.pitchState.selectedPlayerPosition!;
     const newPathMoves = this.movePathService.GetBestPath(startPosition, position, this.pitchState.players);
     this.pitchState.displayedMoves = [
       ...this.pitchState.displayedMoves,
       ...newPathMoves
     ];
-    const remainingMovement = this.pitchState.selectedPlayerPosition.player.ma - this.pitchState.displayedMoves.length;
-    this.pitchState.availableMoves = this.availableMovesService.GetAvailableMoves(this.pitchState.displayedMoves.at(-1)!, this.pitchState.players, remainingMovement);
+  }
+
+  private calculateOddsFromDisplayedMoves() {
+    const displayedMovesWithStart: PitchPosition[] = [
+      this.pitchState.selectedPlayerPosition!,
+      ...this.pitchState.displayedMoves
+    ];
+    const displayedOdds: OddsPosition[] = [];
+
+    for(let i: number = 0; i < displayedMovesWithStart.length - 1; i++) {
+
+      const startPosition = displayedMovesWithStart[i];
+      const endPosition = displayedMovesWithStart[i+ 1];
+      const tackleZones = this.pitchState.tackleZones;
+      const dodgeChance = this.gameOddsService.GetDodgeChange(startPosition, endPosition, tackleZones);
+      const oddsPosition = OddsPosition.FromPosition(endPosition, dodgeChance);
+
+      displayedOdds.push(oddsPosition);
+    }
+
+    this.pitchState.displayedOdds = displayedOdds;
+  }
+
+  private setAvailableMovesFromSelectedPosition() {
+    const remainingMovement = this.pitchState.selectedPlayerPosition!.player.ma - this.pitchState.displayedMoves.length;
+    const lastMovePosition = this.pitchState.displayedMoves.at(-1)!;
+    this.pitchState.availableMoves = this.availableMovesService.GetAvailableMoves(lastMovePosition, this.pitchState.players, remainingMovement);
   }
 
   onDblClickAvailableMove(position: PitchPosition) {
@@ -81,6 +115,7 @@ export class GameComponent implements OnInit {
     this.pitchState.selectedPlayerPosition = undefined;
     this.pitchState.availableMoves = [];
     this.pitchState.displayedMoves = [];
+    this.pitchState.displayedOdds = [];
     this.pitchState.tackleZones = [];
   }
 }

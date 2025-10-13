@@ -18,11 +18,15 @@
       @for (moveNum of pitchDisplaySquare.moveNums; track $index) {
         <p>{{ moveNum }}</p>
       }
-      @for (displayedOdds of pitchDisplaySquare.displayedOdds; track $index) {
-        <app-odds-popover
-          [displayedOdds]="displayedOdds"
-        ></app-odds-popover>
-      }
+      <div class="app-odds-container">
+        @for (displayedOdds of pitchDisplaySquare.displayedOdds; track $index) {
+          @if (displayedOdds < 1) {
+            <app-odds-popover
+              [displayedOdds]="displayedOdds"
+            ></app-odds-popover>
+          }
+        }
+      </div>
     </div>
   }
 </div>

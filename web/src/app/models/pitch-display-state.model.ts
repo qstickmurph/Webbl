@@ -1,6 +1,7 @@
 import { PITCH_COLS, PITCH_ROWS } from "../constants/pitch-dimensions.constants";
 import { MoveType } from "../models/move-type.enum";
 import { MovementPosition } from "./movement-position.model";
+import { OddsPosition } from "./odds-position.model";
 import { PitchDisplaySquare } from "./pitch-display-square.model";
 import { PitchPosition } from "./pitch-position.model";
 import { PlayerPosition } from "./player-position.model";
@@ -13,6 +14,7 @@ export class PitchDisplayState {
   private _selectedPlayerPosition?: PlayerPosition;
   private _availableMoves: MovementPosition[] = [];
   private _displayedMoves: PitchPosition[] = [];
+  private _displayedOdds: OddsPosition[] = [];
   private _tackleZones: TackleZonePosition[] = [];
 
   public pitchDisplaySquares: PitchDisplaySquare[] = [];
@@ -56,6 +58,15 @@ export class PitchDisplayState {
   public set displayedMoves(displayedMoves: PitchPosition[]) {
     this._displayedMoves = displayedMoves;
     this.setupPitchDisplaySquareDisplayedMoves();
+  }
+
+  public get displayedOdds() {
+    return this._displayedOdds;
+  }
+
+  public set displayedOdds(displayedOdds: OddsPosition[]) {
+    this._displayedOdds = displayedOdds;
+    this.setupPitchDisplaySquareDisplayedOdds();
   }
 
   public get tackleZones() {
@@ -162,7 +173,6 @@ export class PitchDisplayState {
       if (square) {
         square.isDisplayedMove = true;
         square.moveNums.push(i+1);
-        square.displayedOdds.push(1);
       }
     });
   }
@@ -171,10 +181,26 @@ export class PitchDisplayState {
     this.pitchDisplaySquares.forEach(square => {
         square.isDisplayedMove = false;
         square.moveNums = [];
-        square.displayedOdds = [];
     });
   }
 
+  private setupPitchDisplaySquareDisplayedOdds() {
+    this.resetPitchDisplaySquareDisplayedOdds();
+
+    this._displayedOdds.forEach(odds => {
+      const square = odds.FindIn(this.pitchDisplaySquares)
+
+      if (square) {
+        square.displayedOdds.push(odds.odds);
+      }
+    });
+  }
+
+  private resetPitchDisplaySquareDisplayedOdds() {
+    this.pitchDisplaySquares.forEach(square => {
+        square.displayedOdds = [];
+    });
+  }
   private setupPitchDisplaySquareTackleZones() {
     this.resetPitchDisplaySquareTackleZones();
 
