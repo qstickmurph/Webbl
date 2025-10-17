@@ -19,6 +19,10 @@ export class MovePathService {
     players: PlayerPosition[] = [],
     tackleZones: TackleZonePosition[] = []
   ) {
+    if (start.GetDistance(end) === 1) {
+      return [ end ];
+    }
+
     const labelMap = this.GetAllNonDominatedLabels(start, end, player, currentDistance, players, tackleZones);
     const endLabels = labelMap.get(end.Id);
     if (!endLabels) {
