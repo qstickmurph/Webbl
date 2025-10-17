@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^20.3.3",
     "@angular/platform-browser-dynamic": "^20.3.3",
     "@angular/router": "^20.3.3",
+    "@datastructures-js/priority-queue": "^6.3.5",
     "eslint": "^9.37.0",
     "lodash": "^4.17.21",
     "rxjs": "~7.8.2",

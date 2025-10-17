@@ -3,7 +3,7 @@
     <div
       class="pitchSquare row-{{pitchDisplaySquare.row}} col-{{pitchDisplaySquare.col}}"
       [style.background-color]="pitchDisplaySquare.getBackgroundColor()"
-      (mousedown)="onClickOnPitchSquare(pitchDisplaySquare)"
+      (click)="onClickOnPitchSquare(pitchDisplaySquare)"
       (dblclick)="onDblClickOnPitchSquare(pitchDisplaySquare)"
       (mouseenter)="onMouseEnterPitchSquare(pitchDisplaySquare)"
       (mouseleave)="onMouseLeavePitchSquare(pitchDisplaySquare)"

@@ -91,7 +91,7 @@ export class GameComponent implements OnInit {
       const selectedPlayer = this.pitchState.selectedPlayerPosition!.player;
       const tackleZones = this.pitchState.tackleZones;
 
-      const dodgeChance = this.gameOddsService.GetDodgeChange(
+      const dodgeChance = this.gameOddsService.GetDodgeChance(
         startPosition,
         endPosition,
         selectedPlayer,

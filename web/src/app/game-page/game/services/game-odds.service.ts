@@ -7,7 +7,18 @@ import { Player } from '../../../models/player.model';
   providedIn: 'root'
 })
 export class GameOddsService {
-  GetDodgeChange(start: PitchPosition, end: PitchPosition, player: Player, tackleZones: TackleZonePosition[]) {
+  GetMoveOdds(start: PitchPosition, end: PitchPosition, player: Player, tackleZones: TackleZonePosition[], moveNumber: number) {
+    let moveOdds = 1;
+    if (moveNumber > player.ma) {
+      moveOdds *= this.GetRushChance();
+    }
+
+    moveOdds *= this.GetDodgeChance(start, end, player, tackleZones);
+
+    return moveOdds;
+  }
+
+  GetDodgeChance(start: PitchPosition, end: PitchPosition, player: Player, tackleZones: TackleZonePosition[]) {
     const hasToDodge = start.IsIn(tackleZones);
     if (!hasToDodge) {
       return 1;

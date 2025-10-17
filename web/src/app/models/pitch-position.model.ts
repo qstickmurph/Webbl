@@ -20,6 +20,10 @@ export class PitchPosition {
     this.col = col;
   }
 
+  get Id() {
+    return this.row * PITCH_COLS + this.col;
+  }
+
   GetDistance(b: PitchPosition) {
     return Math.max(
       Math.abs(this.row - b.row),
@@ -66,5 +70,10 @@ export class PitchPosition {
     }
 
     return adjacentPositions;
+  }
+
+  IsDiagonalMove(b: PitchPosition) {
+    return this.row - b.row !== 0
+      && this.col - b.col !== 0;
   }
 }
