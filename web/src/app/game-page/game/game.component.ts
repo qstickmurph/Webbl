@@ -59,7 +59,19 @@ export class GameComponent implements OnInit {
 
   private addBestPathToDisplayedMoves(position: PitchPosition) {
     const startPosition = this.pitchState.displayedMoves.length > 0 ? this.pitchState.displayedMoves.at(-1)! : this.pitchState.selectedPlayerPosition!;
-    const newPathMoves = this.movePathService.GetBestPath(startPosition, position, this.pitchState.players);
+    const selectedPlayer = this.pitchState.selectedPlayerPosition!.player;
+    const currentDistance = this.pitchState.displayedMoves.length;
+    const players = this.pitchState.players;
+    const tackleZones = this.pitchState.tackleZones;
+    const newPathMoves = this.movePathService.GetBestPath(
+      startPosition,
+      position,
+      selectedPlayer,
+      currentDistance,
+      players,
+      tackleZones
+    );
+
     this.pitchState.displayedMoves = [
       ...this.pitchState.displayedMoves,
       ...newPathMoves
@@ -74,14 +86,31 @@ export class GameComponent implements OnInit {
     const displayedOdds: OddsPosition[] = [];
 
     for(let i: number = 0; i < displayedMovesWithStart.length - 1; i++) {
-
       const startPosition = displayedMovesWithStart[i];
       const endPosition = displayedMovesWithStart[i+ 1];
+      const selectedPlayer = this.pitchState.selectedPlayerPosition!.player;
       const tackleZones = this.pitchState.tackleZones;
-      const dodgeChance = this.gameOddsService.GetDodgeChange(startPosition, endPosition, tackleZones);
-      const oddsPosition = OddsPosition.FromPosition(endPosition, dodgeChance);
 
-      displayedOdds.push(oddsPosition);
+      const dodgeChance = this.gameOddsService.GetDodgeChange(
+        startPosition,
+        endPosition,
+        selectedPlayer,
+        tackleZones
+      );
+      if (dodgeChance < 1) {
+        const dodgeOddsPosition = OddsPosition.FromPosition(endPosition, dodgeChance);
+        displayedOdds.push(dodgeOddsPosition);
+      }
+
+      if (i < selectedPlayer.ma) {
+        continue;
+      }
+
+      const rushChance = this.gameOddsService.GetRushChance();
+      if (rushChance < 1) {
+        const rushOddsPosition = OddsPosition.FromPosition(endPosition, rushChance);
+        displayedOdds.push(rushOddsPosition);
+      }
     }
 
     this.pitchState.displayedOdds = displayedOdds;
@@ -89,7 +118,7 @@ export class GameComponent implements OnInit {
 
   private setAvailableMovesFromSelectedPosition() {
     const remainingMovement = this.pitchState.selectedPlayerPosition!.player.ma - this.pitchState.displayedMoves.length;
-    const lastMovePosition = this.pitchState.displayedMoves.at(-1)!;
+    const lastMovePosition = this.pitchState.displayedMoves.at(-1) ?? this.pitchState.selectedPlayerPosition!;
     this.pitchState.availableMoves = this.availableMovesService.GetAvailableMoves(lastMovePosition, this.pitchState.players, remainingMovement);
   }
 
