@@ -5,25 +5,29 @@ services:
   api:
     build:
       context: .
-      dockerfile: ./tools/containers/api.Containerfile
+      dockerfile: ./tools/containerfiles/api.Containerfile
       target: development
       args:
-        - API_DIR=./server/Api
+        - SERVER_DIR=./server
         - HTTP_PORT=5000
         - HTTPS_PORT=5001
     container_name: webbl-api-dev
     restart: unless-stopped
     ports:
-      - "${API_HTTP_PORT:-5000}:5000"
-      - "${API_HTTPS_PORT:-5001}:5001"
+      - "${API_HTTP_PORT}:5000"
+      - "${API_HTTPS_PORT}:5001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DOTNET_USE_POLLING_FILE_WATCHER=true
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=myapp_dev;Username=devuser;Password=devpassword
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=${DB_PORT};Database=${DB_NAME};Username=${DB_USERNAME};Password=${DB_PASSWORD}
     volumes:
-      - ./server/Api:/app
-      - /app/obj
-      - /app/bin
+      - ./server:/app
+      - /app/Api/bin
+      - /app/Api/obj
+      - /app/Data/bin
+      - /app/Data/obj
+      - /app/Game/bin
+      - /app/Game/obj
     depends_on:
       postgres:
         condition: service_healthy
@@ -35,7 +39,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./tools/containers/web.Containerfile
+      dockerfile: ./tools/containerfiles/web.Containerfile
       target: development
       args:
         - WEB_DIR=./web
@@ -45,7 +49,8 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - API_URL=http://api:${HTTP_PORT:-5000}
+      - API_URL=api
+      - API_PORT=${HTTP_PORT:-5000}
     volumes:
       - ./web/src/:/app/src
       - ./web/angular.json:/app/angular.json
@@ -59,18 +64,17 @@ services:
 
   # Webbl Database
   postgres:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     container_name: webbl-postgres-dev
     restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-webbl}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB:-webbl}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ./tools/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-data:/var/lib/postgresql/18/docker
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U devuser"]
       interval: 10s

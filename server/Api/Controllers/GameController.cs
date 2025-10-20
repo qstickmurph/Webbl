@@ -1,13 +1,15 @@
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using Webbl.Api.ApiServices;
+using Entities = Webbl.Data.Entities;
 
 namespace Webbl.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class GameController: ControllerBase {
-    [HttpGet]
-    public ActionResult<string> GetGame() {
-        return Ok("Hello World!");
-    }
+public sealed class GameController(IGameService gameService) : ControllerBase {
+  [HttpGet]
+  public ActionResult<Entities.Game> GetGame() {
+    var game = gameService.GetGame();
+    return game;
+  }
 }
