@@ -41,7 +41,7 @@ export class AvailableMovesService {
   private GetAllNextMoves(priorMoves: MovementPosition[], moveType: MoveType) {
     const nextAvailableMoves: MovementPosition[] = [];
 
-    for (let priorMove of priorMoves) {
+    for (const priorMove of priorMoves) {
       const nextMoves = priorMove.GetAllAdjacentMovements(moveType);
       const uniqueNextMoves = nextMoves.filter(
         move => !move.IsIn(nextAvailableMoves.map(x => x))

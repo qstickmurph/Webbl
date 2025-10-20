@@ -86,10 +86,6 @@ export class MovePathService {
         };
         const existingLabels = labelMap.get(adjacentPosition.Id);
 
-        if (adjacentPosition.Id === 309) {
-          debugger;
-        }
-
         if (this.ShouldAddToLabels(newAdjacentLabel, existingLabels, end, player.ma, players)) {
           if (existingLabels) {
             this.AddToLabels(newAdjacentLabel, existingLabels);

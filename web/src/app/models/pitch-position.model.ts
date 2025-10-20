@@ -58,7 +58,7 @@ export class PitchPosition {
 
   GetAllAdjacent() {
     const adjacentPositions: PitchPosition[] = [];
-    for (let moveDirection of this.MOVE_DIRECTIONS) {
+    for (const moveDirection of this.MOVE_DIRECTIONS) {
       const adjacentPosition: PitchPosition = new PitchPosition(
         this.row + moveDirection.row_delta,
         this.col + moveDirection.col_delta
