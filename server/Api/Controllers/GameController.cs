@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Webbl.Api.ApiServices;
-using Entities = Webbl.Data.Entities;
+using Webbl.Api.Dtos;
 
 namespace Webbl.Api.Controllers;
 
@@ -8,8 +8,8 @@ namespace Webbl.Api.Controllers;
 [ApiController]
 public sealed class GameController(IGameService gameService) : ControllerBase {
   [HttpGet]
-  public ActionResult<Entities.Game> GetGame() {
-    var game = gameService.GetGame();
-    return game;
+  public ActionResult<GameDto> GetGame() {
+    var gameDto = gameService.GetGame();
+    return Ok(gameDto);
   }
 }

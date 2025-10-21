@@ -1,7 +1,7 @@
-using Entities = Webbl.Data.Entities;
+using Webbl.Api.Dtos;
 
 namespace Webbl.Api.ApiServices;
 
 public interface IGameService {
-  public Entities.Game GetGame();
+  public GameDto GetGame();
 }

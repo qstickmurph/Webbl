@@ -15,10 +15,11 @@ services:
     restart: unless-stopped
     ports:
       - "${API_HTTP_PORT}:5000"
-      - "${API_HTTPS_PORT}:5001"
+#      - "${API_HTTPS_PORT}:5001"
     tty: true
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:${API_HTTP_PORT}
       - DOTNET_USE_POLLING_FILE_WATCHER=true
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=${DB_PORT};Database=${DB_NAME};Username=${DB_USERNAME};Password=${DB_PASSWORD}
       - TERM=xterm-256color
