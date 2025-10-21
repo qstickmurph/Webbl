@@ -16,10 +16,12 @@ services:
     ports:
       - "${API_HTTP_PORT}:5000"
       - "${API_HTTPS_PORT}:5001"
+    tty: true
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DOTNET_USE_POLLING_FILE_WATCHER=true
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=${DB_PORT};Database=${DB_NAME};Username=${DB_USERNAME};Password=${DB_PASSWORD}
+      - TERM=xterm-256color
     volumes:
       - ./server:/app
       - /app/Api/bin
@@ -48,9 +50,11 @@ services:
     restart: unless-stopped
     ports:
       - "8080:8080"
+    tty: true
     environment:
       - API_URL=api
       - API_PORT=${HTTP_PORT:-5000}
+      - TERM=xterm-256color
     volumes:
       - ./web/src/:/app/src
       - ./web/angular.json:/app/angular.json
