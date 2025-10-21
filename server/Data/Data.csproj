@@ -8,4 +8,7 @@
     <RootNamespace>Webbl.Data</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+  </ItemGroup>
+
 </Project>

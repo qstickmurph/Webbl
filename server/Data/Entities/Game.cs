@@ -1,7 +1,7 @@
 namespace Webbl.Data.Entities;
 
-public class Game {
-  public Guid Id;
+public sealed class Game {
+    public Guid Id;
 
-  public IEnumerable<Player> Players = [];
+    public IEnumerable<Player> Players = [];
 }
