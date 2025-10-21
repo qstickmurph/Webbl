@@ -21,22 +21,19 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:${API_HTTP_PORT}
       - DOTNET_USE_POLLING_FILE_WATCHER=true
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=${DB_PORT};Database=${DB_NAME};Username=${DB_USERNAME};Password=${DB_PASSWORD}
+      - ConnectionStrings__ApplicationDbConnectionString=Host=postgres;Database=${DB_NAME};Username=${DB_USERNAME};Password=${DB_PASSWORD}
       - TERM=xterm-256color
     volumes:
-      - ./server:/app
-      - /app/Api/bin
-      - /app/Api/obj
-      - /app/Data/bin
-      - /app/Data/obj
-      - /app/Game/bin
-      - /app/Game/obj
+      - ./server/Api:/app/Api:ro
+      - ./server/Data:/app/Data:ro
+      - ./server/Game:/app/Game:ro
+      - /app/.build
     depends_on:
       postgres:
         condition: service_healthy
     networks:
-      - web-api-network
-      - api-db-network
+      - web-api-network-dev
+      - api-db-network-dev
 
   # Angular Webbl Frontend
   web:
@@ -61,11 +58,11 @@ services:
       - ./web/angular.json:/app/angular.json
       - ./web/tsconfig.json:/app/tsconfig.json
       - ./web/tsconfig.app.json:/app/tsconfig.app.json
-      - /app/nodemodules
+      - /app/node_modules
     depends_on:
       - api
     networks:
-      - web-api-network
+      - web-api-network-dev
 
   # Webbl Database
   postgres:
@@ -79,21 +76,21 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - postgres-data:/var/lib/postgresql/18/docker
+      - postgres-data-dev:/var/lib/postgresql/18/docker
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U devuser"]
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
-      - api-db-network
+      - api-db-network-dev
 
 volumes:
-  postgres-data:
+  postgres-data-dev:
     driver: local
 
 networks:
-  web-api-network:
+  web-api-network-dev:
     driver: bridge
-  api-db-network:
+  api-db-network-dev:
     driver: bridge

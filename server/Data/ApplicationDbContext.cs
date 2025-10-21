@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Webbl.Data;
 
-public sealed class ApplicationDbContext : DbContext {
+public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options) {
     public DbSet<Entities.Game> Games { get; set; }
     public DbSet<Entities.Player> Players { get; set; }
 
@@ -23,5 +23,11 @@ public sealed class ApplicationDbContext : DbContext {
         modelBuilder.Entity<Entities.Game>()
             .HasMany(g => g.Players)
             .WithMany(p => p.Games);
+
+        // Seed Data
+        modelBuilder.Entity<Entities.Game>()
+            .HasData(
+                
+            );
     }
 }

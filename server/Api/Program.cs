@@ -15,9 +15,7 @@ public static class Program {
         var connectionString =
             builder.Configuration.GetConnectionString("ApplicationDbConnectionString")
             ?? throw new InvalidOperationException("Connection string 'ApplicationDbConnectionString' not found.");
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString)
-        );
+        builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
         builder.Services.AddControllers().AddJsonOptions(options => 
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)));

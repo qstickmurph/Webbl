@@ -1,26 +1,14 @@
 using Webbl.Api.Dtos;
 using Webbl.Api.MappingExtensions;
-
-using Entities = Webbl.Data.Entities;
+using Webbl.Data;
 
 namespace Webbl.Api.ApiServices;
 
-public sealed class GameService : IGameService {
+public sealed class GameService(ApplicationDbContext applicationDbContext) : IGameService {
+    private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
+
     public GameDto GetGame() {
-        var game = new Entities.Game {
-            Id = Guid.NewGuid(),
-            Players = [
-                new() {
-                    Id = Guid.NewGuid(),
-                    Name = "Player 1",
-                    MA = 6,
-                    ST = 3,
-                    AG = 3,
-                    PA = 3,
-                    AV = 3
-                }
-            ]
-        };
+        var game = _applicationDbContext.Games.First();
 
         return game.ToDto();
     }
