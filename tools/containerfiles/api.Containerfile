@@ -17,7 +17,8 @@ EXPOSE ${HTTPS_PORT}
 FROM base AS development
 ENV ASPNETCORE_ENVIRONMENT=Development
 ENV ASPNETCORE_URLS=http://+:${HTTP_PORT};https://+:${HTTPS_PORT}
-ENTRYPOINT ["dotnet", "watch", "run", "--project", "Api/Api.csproj"]
+RUN dotnet build Api/Api.csproj
+ENTRYPOINT ["dotnet", "run", "--project", "Api/Api.csproj"]
 CMD ["--no-restore", "--non-interactive"]
 
 # Production Build Stage

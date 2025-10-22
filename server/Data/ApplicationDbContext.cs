@@ -25,9 +25,5 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
             .WithMany(p => p.Games);
 
         // Seed Data
-        modelBuilder.Entity<Entities.Game>()
-            .HasData(
-                
-            );
     }
 }

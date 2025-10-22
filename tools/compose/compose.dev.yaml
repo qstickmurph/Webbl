@@ -21,13 +21,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:${API_HTTP_PORT}
       - DOTNET_USE_POLLING_FILE_WATCHER=true
-      - ConnectionStrings__ApplicationDbConnectionString=Host=postgres;Database=${DB_NAME};Username=${DB_USERNAME};Password=${DB_PASSWORD}
+      - ConnectionStrings__ApplicationDbContext=Host=webbl-postgres-dev;Database=${DB_NAME};Username=${DB_USERNAME};Password=${DB_PASSWORD}
       - TERM=xterm-256color
-    volumes:
-      - ./server/Api:/app/Api:ro
-      - ./server/Data:/app/Data:ro
-      - ./server/Game:/app/Game:ro
-      - /app/.build
     depends_on:
       postgres:
         condition: service_healthy
@@ -84,6 +79,7 @@ services:
       retries: 5
     networks:
       - api-db-network-dev
+      - db-migrator-network-dev
 
 volumes:
   postgres-data-dev:
@@ -93,4 +89,6 @@ networks:
   web-api-network-dev:
     driver: bridge
   api-db-network-dev:
+    driver: bridge
+  db-migrator-network-dev:
     driver: bridge
